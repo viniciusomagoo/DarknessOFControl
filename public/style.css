@@ -1,0 +1,243 @@
+/* Variáveis de Cor para estética VHS/Pixel */
+:root {
+    --font-pixel: 'VT323', monospace;
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #aaaaaa;
+    --text-muted: #e0e0e0;
+    --accent-red: #FF0000;
+    --glitch-cyan: #00ffff;
+    --glitch-magenta: #ff00ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-pixel);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    
+    /* Remove suavização da fonte */
+    font-smooth: never;
+    -webkit-font-smoothing: none;
+    image-rendering: pixelated;
+}
+
+/* Efeito de estática (ruído) */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: 
+        repeating-linear-gradient(transparent, rgba(255,255,255,0.02) 2px, transparent 4px),
+        repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.02) 2px, transparent 4px);
+    z-index: 10;
+    animation: staticFlicker 0.1s infinite;
+    opacity: 0.2;
+}
+
+@keyframes staticFlicker {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.3; }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 40px;
+}
+
+/* Título principal com efeito Glitch */
+.main-title {
+    text-align: center;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 400; /* Fonte VT323 só tem 1 peso */
+    margin: 60px 0 30px;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    color: var(--accent-red);
+    position: relative;
+    animation: glitch 2s linear infinite;
+}
+
+.main-title::before,
+.main-title::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-primary);
+}
+
+.main-title::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--glitch-cyan);
+    animation: glitch-anim-1 2s linear infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.main-title::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--glitch-magenta);
+    animation: glitch-anim-2 2s linear infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+/* Keyframes do Glitch */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+@keyframes glitch-anim-1 {
+    0% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+    50% { clip-path: polygon(0 25%, 100% 25%, 100% 100%, 0 100%); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+}
+@keyframes glitch-anim-2 {
+    0% { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
+    50% { clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%); }
+    100% { clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%); }
+}
+
+/* Seção sobre (quadrada, borda dura) */
+.about-section {
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent-red);
+    border-radius: 0;
+    padding: 30px;
+    margin: 40px 0;
+    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Seção de Informações do Jogo */
+.game-info-section {
+    background: var(--bg-secondary);
+    border: 2px solid var(--text-primary);
+    border-radius: 0;
+    padding: 50px 30px;
+    margin-top: 50px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.game-description {
+    display: grid;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.description-card {
+    background: var(--bg-card);
+    border-left: 4px solid var(--accent-red);
+    padding: 25px;
+    border-radius: 0;
+    transition: background 0.2s ease;
+}
+
+.description-card:hover {
+    background: #222;
+}
+
+.description-card p {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+.multiplayer-badge {
+    display: inline-block;
+    background: var(--accent-red);
+    color: var(--text-primary);
+    padding: 8px 20px;
+    border-radius: 0;
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+/* Botão de Créditos */
+.credits-button-container {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.credits-button {
+    display: inline-block;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 2px solid var(--text-primary);
+    padding: 18px 50px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.credits-button:hover {
+    background: var(--accent-red);
+    border-color: var(--accent-red);
+    color: var(--text-primary);
+    transform: translateY(-3px);
+}
+
+/* Responsividade (seletores atualizados) */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+
+    .about-section {
+        padding: 20px;
+        font-size: 1.2rem;
+    }
+
+    .game-info-section {
+        padding: 30px 20px;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .description-card {
+        padding: 20px;
+    }
+}
