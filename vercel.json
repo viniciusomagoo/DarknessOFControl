@@ -1,16 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/Créditos/",
-      "destination": "/Créditos/index.html",
-      "permanent": true
-    },
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
+      "source": "/(.*)",
+      "destination": "/public/$1"
     }
   ]
 }
