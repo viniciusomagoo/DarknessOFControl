@@ -3,8 +3,8 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/Créditos/Creditos.html",
-      "destination": "/Créditos/Creditos",
+      "source": "/Créditos/",
+      "destination": "/Créditos/index.html",
       "permanent": true
     },
     {
