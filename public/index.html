@@ -1,54 +1,108 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Darkness Of Control</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        
-        <h1 class="main-title" data-text="Darkness Of Control">Darkness Of Control</h1>
-        
-        <article class="about-section">
-            Darkness Of Control é um projeto do curso de Brasília chamado <strong>Brasil.IA</strong>, 
-            com objetivo de ensinar sobre computação, I.A, programação (inclusive esse site) e muito mais!
-        </article>
+    <style>
+        /* Animação de fade-in para a tabela principal */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        <section class="game-info-section">
+        #main-table {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Animação pulsante para o título */
+        @keyframes pulse-red {
+            0% { text-shadow: 0 0 5px #F00; }
+            50% { text-shadow: 0 0 20px #F00, 0 0 30px #F00; }
+            100% { text-shadow: 0 0 5px #F00; }
+        }
+        
+        /* Aplicando a animação diretamente na tag <font> dentro do h1 */
+        h1.title font[color="red"] {
+            animation: pulse-red 2s infinite;
+        }
+
+        /* Transição suave para os links */
+        a.retro-link {
+            transition: all 0.2s ease;
+            font-weight: normal;
+        }
+        
+        a.retro-link:hover {
+            color: #FF00FF; /* Um rosa/magenta bem "vaporwave" */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body bgcolor="#C0C0C0" text="#000000" link="#0000FF" vlink="#800080">
+
+    <center>
+        <table id="main-table" width="600" border="1" cellspacing="5" cellpadding="10" bgcolor="#FFFFFF">
             
-            <h2 class="section-title">Descrição do Jogo</h2>
-            
-            <div class="game-description">
-                <div class="description-card">
+            <tr>
+                <td>
+                    <h1 align="center" class="title">
+                        <font color="red">Darkness Of Control</font>
+                    </h1>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p align="center">
+                        Darkness Of Control é um projeto do curso de Brasília chamado <b>Brasil.IA</b>, 
+                        com objetivo de ensinar sobre computação, I.A, programação (inclusive esse site) e muito mais!
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <h2 align="center">
+                        <font color="blue">Descrição do Jogo</font>
+                    </h2>
+                    
                     <p>
                         Na escuridão, você acorda no meio de uma floresta cheia de neblina e medo. 
                         Repare geradores, colete chaves e se esconda da entidade que espreita nas sombras.
                     </p>
-                </div>
-
-                <div class="description-card">
+                    
+                    <hr>
+                    
                     <p>
                         Você não aguenta ir sozinho e quer que seus amigos sofram também? 
                         O jogo oferece compatibilidade multiplayer para até 6 pessoas.
                     </p>
-                    <span class="multiplayer-badge">👥 1 Assassino + 5 Sobreviventes</span>
-                </div>
-            </div>
-        </section>
+                    
+                    <b>👥 1 Assassino + 5 Sobreviventes</b>
+                </td>
+            </tr>
 
-        <div class="credits-button-container">
-            <a href="Créditos/Creditos.html" class="credits-button">
-                Créditos
-            </a>
-        </div>
-    </div>
+            <tr>
+                <td align="center">
+                    <a href="Créditos/Creditos.html" class="retro-link">Créditos</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td align="center">
+                    <hr>
+                    <font size="2">
+                        <i>Última atualização: 8 de Novembro, 2025</i>
+                    </font>
+                    <br>
+                    <font size="1">Site otimizado para Google Chrome</font>
+                </td>
+            </tr>
+
+        </table>
+    </center>
+     <script src="index.js"></script>
 </body>
 </html>
