@@ -36,11 +36,11 @@ body {
     width: 100%;
     min-height: 100vh; 
     overflow: hidden;
-    animation: crt-glitch 1.5s linear infinite;
-
-    /* TRANSIÇÃO FLUIDA: 
-       Adicionada transição de 'background' para a mudança de tema.
+    /* CORREÇÃO DE LAG: Animação de glitch foi removida daqui.
+      Ela agora é ativada pela classe '.is-glitching' via JS.
     */
+    /* animation: crt-glitch 1.5s linear infinite; */
+
     background: var(--bg-dark);
     transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -75,8 +75,24 @@ body {
 .noise {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWF1YeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
-    opacity: 0.1; z-index: 9993; pointer-events: none; animation: noise 0.5s steps(2) infinite;
+    opacity: 0.1; z-index: 9993; pointer-events: none;
+    /* CORREÇÃO DE LAG: Animação de noise foi removida daqui.
+      Ela agora é ativada pela classe '.is-glitching' via JS.
+    */
+    /* animation: noise 0.5s steps(2) infinite; */
 }
+
+/* ============================================== */
+/* OTIMIZAÇÃO DE LAG: Glitch é ativado via JS */
+/* ============================================== */
+.crt.is-glitching {
+    animation: crt-glitch 1.5s linear infinite;
+}
+.crt.is-glitching > .noise {
+    animation: noise 0.5s steps(2) infinite;
+}
+
+/* Animações Keyframes para o Efeito CRT/VHS */
 @keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
 @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
 @keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
@@ -102,57 +118,35 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     left: 0;
     width: 100%;
     height: 100%;
-    /* Múltiplas camadas de estrelas para profundidade e fluidez */
     background: 
-        /* Camada 1: Estrelas menores e mais distantes */
         radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
         radial-gradient(1.5px 1.5px at 60% 70%, #fff, transparent),
         radial-gradient(1px 1px at 50% 50%, #fff, transparent),
         radial-gradient(1px 1px at 80% 10%, #fff, transparent),
         radial-gradient(1.5px 1.5px at 10% 80%, #fff, transparent),
-        /* Camada 2: Estrelas de tamanho médio */
         radial-gradient(2px 2px at 15% 60%, #fff, transparent),
         radial-gradient(2px 2px at 70% 20%, #fff, transparent),
         radial-gradient(1.8px 1.8px at 40% 90%, #fff, transparent),
-        /* Camada 3: Estrelas maiores e mais próximas */
         radial-gradient(2.5px 2.5px at 30% 40%, #fff, transparent),
         radial-gradient(2.5px 2.5px at 85% 55%, #fff, transparent);
     
     background-size: 
-        600px 600px, /* Camada 1 */
-        700px 700px, /* Camada 1 */
-        550px 550px, /* Camada 1 */
-        800px 800px, /* Camada 1 */
-        650px 650px, /* Camada 1 */
-        
-        500px 500px, /* Camada 2 */
-        750px 750px, /* Camada 2 */
-        600px 600px, /* Camada 2 */
-
-        400px 400px, /* Camada 3 */
-        850px 850px; /* Camada 3 */
+        600px 600px, 700px 700px, 550px 550px, 800px 800px, 650px 650px,
+        500px 500px, 750px 750px, 600px 600px,
+        400px 400px, 850px 850px;
 
     animation: 
         stars-layer1 180s linear infinite,
         stars-layer2 120s linear infinite,
-        stars-layer3 90s linear infinite; /* Animações individuais por camada */
+        stars-layer3 90s linear infinite; 
     opacity: 0.2;
     z-index: 0;
 }
 
 /* Animações para as camadas de estrelas */
-@keyframes stars-layer1 {
-    0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-    100% { background-position: 100% 100%, 80% 120%, 110% 90%, 90% 80%, 130% 70%; }
-}
-@keyframes stars-layer2 {
-    0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
-    100% { background-position: 120% 90%, 70% 110%, 100% 80%; }
-}
-@keyframes stars-layer3 {
-    0% { background-position: 0% 0%, 0% 0%; }
-    100% { background-position: 90% 130%, 110% 70%; }
-}
+@keyframes stars-layer1 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 100% 100%, 80% 120%, 110% 90%, 90% 80%, 130% 70%; } }
+@keyframes stars-layer2 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 120% 90%, 70% 110%, 100% 80%; } }
+@keyframes stars-layer3 { 0% { background-position: 0% 0%, 0% 0%; } 100% { background-position: 90% 130%, 110% 70%; } }
 
 /* Estrelas Cadentes (Melhorado) */
 .shooting-star {
@@ -163,8 +157,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     border-radius: 50%;
     opacity: 0;
     pointer-events: none;
-    z-index: 1; /* Acima das estrelas fixas */
-    /* A animação real será definida via JavaScript para aleatoriedade */
+    z-index: 1;
 }
 
 /* Indicadores VHS */
@@ -260,7 +253,6 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     background: var(--card-bg);
     border: 2px solid var(--secondary-color);
     padding: 30px; position: relative; overflow: hidden;
-    /* Transição mais rápida para o foco */
     transition: all 0.3s ease; 
     box-shadow: 0 0 20px rgba(0, 162, 255, 0.3);
 }

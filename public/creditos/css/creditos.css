@@ -5,13 +5,13 @@
     box-sizing: border-box;
 }
 
+/* PALETA AESTHETIC (Igual à da página principal) */
 :root {
-    /* PALETA AESTHETIC */
-    --bg-dark: #010103;        
+    --bg-dark: #010103;        /* Preto Vibrante */
     --text-color: #EAEAEA;
-    --primary-color: #FF003C;  
-    --secondary-color: #00A2FF; 
-    --accent-color: #F7F700;   
+    --primary-color: #FF003C;  /* Vermelho Vibrante */
+    --secondary-color: #00A2FF; /* Azul Vibrante */
+    --accent-color: #F7F700;   /* Amarelo Vibrante */
     --card-bg: rgba(10, 10, 20, 0.9);
 
     /* NOVAS PALETAS DE POKÉMON */
@@ -30,7 +30,7 @@ body {
 }
 
 /* ============================================== */
-/* EFEITO VHS/CRT (Inalterado)                    */
+/* EFEITO VHS/CRT (SHADER CSS)                    */
 /* ============================================== */
 
 .crt {
@@ -38,19 +38,17 @@ body {
     width: 100%;
     min-height: 100vh;
     overflow: hidden;
-    animation: crt-glitch 1.5s linear infinite;
-
-    /* TRANSIÇÃO FLUIDA: 
-       A base do .crt agora é o fundo escuro.
-       Adicionamos uma transição fluida para a propriedade 'background'.
+    /* CORREÇÃO DE LAG: Animação de glitch foi removida daqui.
+      Ela agora é ativada pela classe '.is-glitching' via JS.
     */
+    /* animation: crt-glitch 1.5s linear infinite; */
+
     background: var(--bg-dark);
     transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* NOVAS CLASSES DE TEMA (Fundo) */
 .crt.oshawott-theme {
-    /* Mistura o fundo escuro com a cor do Pokémon em um gradiente */
     background: linear-gradient(135deg, var(--bg-dark) 20%, var(--oshawott-color) 150%);
 }
 .crt.greninja-theme {
@@ -84,9 +82,25 @@ body {
 }
 .noise {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/11+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWF1YeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
-    opacity: 0.1; z-index: 9993; pointer-events: none; animation: noise 0.5s steps(2) infinite;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWF1YeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
+    opacity: 0.1; z-index: 9993; pointer-events: none;
+    /* CORREÇÃO DE LAG: Animação de noise foi removida daqui.
+      Ela agora é ativada pela classe '.is-glitching' via JS.
+    */
+    /* animation: noise 0.5s steps(2) infinite; */
 }
+
+/* ============================================== */
+/* OTIMIZAÇÃO DE LAG: Glitch é ativado via JS */
+/* ============================================== */
+.crt.is-glitching {
+    animation: crt-glitch 1.5s linear infinite;
+}
+.crt.is-glitching > .noise {
+    animation: noise 0.5s steps(2) infinite;
+}
+
+/* Animações Keyframes para o Efeito CRT/VHS */
 @keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
 @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
 @keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
@@ -172,7 +186,6 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     position: relative;
     cursor: pointer;
     overflow: hidden;
-    /* Transição mais rápida para o efeito de foco */
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
     box-shadow: 0 0 20px rgba(0, 162, 255, 0.3);
 }
@@ -181,7 +194,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     transform: translateY(-10px) scale(1.02);
     border-color: var(--accent-color); /* Amarelo no hover */
     box-shadow: 0 15px 40px rgba(247, 247, 0, 0.4);
-    opacity: 1; /* Garante que o card focado esteja com opacidade total */
+    opacity: 1; 
     filter: grayscale(0%);
 }
 
@@ -207,11 +220,10 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     color: var(--text-color);
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     transition: color 0.4s ease;
-    /* Efeito de glitch no texto ao passar o mouse */
     position: relative;
 }
 
-/* Efeito Glitch no Nome (do seu CSS anterior) */
+/* Efeito Glitch no Nome */
 .member-name::before,
 .member-name::after {
     content: attr(data-text);
@@ -239,19 +251,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     animation: glitch-fx 0.15s linear infinite;
 }
 
-@keyframes glitch-fx {
-    0% { clip-path: inset(85px 0 2px 0); }
-    10% { clip-path: inset(30px 0 50px 0); }
-    20% { clip-path: inset(95px 0 1px 0); }
-    30% { clip-path: inset(5px 0 80px 0); }
-    40% { clip-path: inset(70px 0 15px 0); }
-    50% { clip-path: inset(40px 0 30px 0); }
-    60% { clip-path: inset(80px 0 5px 0); }
-    70% { clip-path: inset(20px 0 70px 0); }
-    80% { clip-path: inset(60px 0 25px 0); }
-    90% { clip-path: inset(10px 0 90px 0); }
-    100% { clip-path: inset(90px 0 5px 0); }
-}
+@keyframes glitch-fx { 0% { clip-path: inset(85px 0 2px 0); } 10% { clip-path: inset(30px 0 50px 0); } 20% { clip-path: inset(95px 0 1px 0); } 30% { clip-path: inset(5px 0 80px 0); } 40% { clip-path: inset(70px 0 15px 0); } 50% { clip-path: inset(40px 0 30px 0); } 60% { clip-path: inset(80px 0 5px 0); } 70% { clip-path: inset(20px 0 70px 0); } 80% { clip-path: inset(60px 0 25px 0); } 90% { clip-path: inset(10px 0 90px 0); } 100% { clip-path: inset(90px 0 5px 0); } }
 
 
 .member-role {

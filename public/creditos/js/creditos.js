@@ -2,8 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const body = document.body;
-    // Precisamos do elemento .crt para mudar o fundo
-    const crt = document.querySelector('.crt');
+    const crt = document.querySelector('.crt'); // Elemento para mudar o fundo
 
     // ============================================
     // TRANSIÇÃO FLUIDA DE PÁGINA
@@ -45,31 +44,47 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTimestamp(); // Roda uma vez imediatamente
 
     // ============================================
-    // NOVO: LÓGICA DE HOVER PARA MUDAR O FUNDO
+    // LÓGICA DE HOVER PARA MUDAR O FUNDO (Créditos)
+    // E CORREÇÃO DE LAG (Glitch Interativo)
     // ============================================
     const creditCards = document.querySelectorAll('.credit-card');
 
     if (crt && creditCards.length > 0) {
         
         creditCards.forEach(card => {
-            // Evento para QUANDO O MOUSE ENTRA no card
             card.addEventListener('mouseenter', () => {
-                const themeName = card.dataset.pokemon; // "oshawott", "greninja", etc.
+                // Ativa o tema do Pokémon
+                const themeName = card.dataset.pokemon;
                 if (themeName) {
                     crt.classList.add(themeName + '-theme');
                 }
+                // Ativa o glitch
+                crt.classList.add('is-glitching');
             });
 
-            // Evento para QUANDO O MOUSE SAI do card
             card.addEventListener('mouseleave', () => {
+                // Desativa o tema do Pokémon
                 const themeName = card.dataset.pokemon;
                 if (themeName) {
                     crt.classList.remove(themeName + '-theme');
                 }
+                // Desativa o glitch
+                crt.classList.remove('is-glitching');
             });
         });
 
         console.log("✓ Sistema de temas de fundo (Pokémon) ativado.");
+    }
+    
+    // Adiciona glitch também ao botão "Voltar"
+    const backButton = document.querySelector('.back-button');
+    if (crt && backButton) {
+        backButton.addEventListener('mouseenter', () => {
+            crt.classList.add('is-glitching');
+        });
+        backButton.addEventListener('mouseleave', () => {
+            crt.classList.remove('is-glitching');
+        });
     }
 
     // ============================================
