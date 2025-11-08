@@ -1,4 +1,0 @@
-A pasta "public" é a pasta principal do projeto website, por isso não e NUNCA pode ser deletada de JEITO NENHUM.
-
-Hospedagem: Firebase
-Desinvolvimento: Visual Studio Code, HTML Doctype 5, Claude.AI
