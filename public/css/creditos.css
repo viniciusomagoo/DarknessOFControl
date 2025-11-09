@@ -30,89 +30,22 @@ body {
 }
 
 /* ============================================== */
-/* EFEITO VHS/CRT (SHADER CSS)                    */
+/* EFEITOS (Keyframes)                            */
 /* ============================================== */
 
-.crt {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    
-    /* CORREÇÃO DE LAG (1/3): Animação de glitch desativada. */
-    /* animation: crt-glitch 1.5s linear infinite; */
-
-    background: var(--bg-dark);
-    transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* NOVAS CLASSES DE TEMA (Fundo) */
-.crt.oshawott-theme {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--oshawott-color) 150%);
-}
-.crt.greninja-theme {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--greninja-color) 150%);
-}
-.crt.arceus-theme {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--arceus-color) 150%);
-}
-.crt.pikachu-theme {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--pikachu-color) 150%);
-}
-
-
-.crt::before {
-    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
-    background-size: 100% 4px, 6px 100%;
-    z-index: 9990; pointer-events: none; animation: crt-scanline 15s linear infinite;
-}
-.crt::after {
-    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-    width: 100%; height: 100%; background: rgba(18, 16, 16, 0.1); opacity: 0;
-    z-index: 9992; pointer-events: none;
-    
-    /* CORREÇÃO DE LAG (2/3): Animação de flicker desativada. */
-    /* animation: crt-flicker 0.15s infinite; */
-}
-.scanlines {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
-    background-size: 100% 2px; z-index: 9991; pointer-events: none;
-}
-.noise {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWFhYeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
-    opacity: 0.1; z-index: 9993; pointer-events: none;
-    
-    /* CORREÇÃO DE LAG (3/3): Animação de noise desativada. */
-    /* animation: noise 0.5s steps(2) infinite; */
-}
-
-/* ============================================== */
-/* OTIMIZAÇÃO DE LAG: Glitch é ativado via JS */
-/* ============================================== */
-.crt.is-glitching {
-    animation: crt-glitch 1.5s linear infinite;
-}
-.crt.is-glitching > .noise {
-    animation: noise 0.5s steps(2) infinite;
-}
-.crt.is-glitching::after {
-    /* Ativa o flicker apenas quando o glitch está ativo */
-    animation: crt-flicker 0.15s infinite;
-}
-
-/* Animações Keyframes para o Efeito CRT/VHS */
+/* Keyframes de CRT/VHS (mantidos caso você queira reativar) */
 @keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
 @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
 @keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
 @keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5%, -5%); } 20% { transform: translate(-10%, 5%); } 30% { transform: translate(5%, -10%); } 40% { transform: translate(-5%, 15%); } 50% { transform: translate(-10%, 5%); } 60% { transform: translate(15%, 0); } 70% { transform: translate(0, 10%); } 80% { transform: translate(-15%, 0); } 90% { transform: translate(10%, 5%); } 100% { transform: translate(0, 0); } }
 
+/* Keyframes de UI */
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
+@keyframes pulse-glow { 0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); } 50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); } }
+@keyframes glitch-fx { 0% { clip-path: inset(85px 0 2px 0); } 10% { clip-path: inset(30px 0 50px 0); } 20% { clip-path: inset(95px 0 1px 0); } 30% { clip-path: inset(5px 0 80px 0); } 40% { clip-path: inset(70px 0 15px 0); } 50% { clip-path: inset(40px 0 30px 0); } 60% { clip-path: inset(80px 0 5px 0); } 70% { clip-path: inset(20px 0 70px 0); } 80% { clip-path: inset(60px 0 25px 0); } 90% { clip-path: inset(10px 0 90px 0); } 100% { clip-path: inset(90px 0 5px 0); } }
+
 /* ============================================== */
-/* FIM DOS EFEITOS VHS/CRT                        */
+/* FIM DOS KEYFRAMES                              */
 /* ============================================== */
 
 
@@ -131,7 +64,6 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
 }
 .vhs-rec::before { content: '●'; font-size: 2rem; margin-right: 10px; }
-@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
 
 .vhs-timestamp {
     position: fixed; bottom: 20px; right: 20px; font-size: 1.5rem;
@@ -151,17 +83,39 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     padding: 40px 20px; position: relative;
 }
 
+/* Logos adicionados */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.header-logo {
+    height: 60px;
+    width: auto;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+.header-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
 .main-title {
     font-family: 'VT323', monospace; font-size: clamp(3rem, 10vw, 6rem);
     margin-bottom: 20px; text-transform: uppercase; letter-spacing: 8px;
     position: relative; display: inline-block; color: var(--primary-color);
     text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color), 0 0 40px var(--primary-color);
-    animation: pulse-glow 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+    
+    /* CORREÇÃO DE LAG (1/1): Animação 'pulse-glow' removida daqui */
+    /* animation: pulse-glow 3s ease-in-out infinite; */
 }
 
-@keyframes pulse-glow {
-    0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); }
-    50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); }
+/* Ativa a animação de brilho APENAS no hover do header */
+.header:hover .main-title {
+    animation: pulse-glow 3s ease-in-out infinite;
 }
 
 .subtitle {
@@ -228,7 +182,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     position: relative;
 }
 
-/* Efeito Glitch no Nome */
+/* Efeito Glitch no Nome (Este está OK, pois é SÓ no hover) */
 .member-name::before,
 .member-name::after {
     content: attr(data-text);
@@ -255,9 +209,6 @@ body.fade-out .page-transition-overlay { opacity: 1; }
 .credit-card:hover .member-name::after {
     animation: glitch-fx 0.15s linear infinite;
 }
-
-@keyframes glitch-fx { 0% { clip-path: inset(85px 0 2px 0); } 10% { clip-path: inset(30px 0 50px 0); } 20% { clip-path: inset(95px 0 1px 0); } 30% { clip-path: inset(5px 0 80px 0); } 40% { clip-path: inset(70px 0 15px 0); } 50% { clip-path: inset(40px 0 30px 0); } 60% { clip-path: inset(80px 0 5px 0); } 70% { clip-path: inset(20px 0 70px 0); } 80% { clip-path: inset(60px 0 25px 0); } 90% { clip-path: inset(10px 0 90px 0); } 100% { clip-path: inset(90px 0 5px 0); } }
-
 
 .member-role {
     font-size: 1.5rem; opacity: 0.8;

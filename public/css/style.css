@@ -28,21 +28,31 @@ body {
 }
 
 /* ============================================== */
-/* EFEITO VHS/CRT (REMOVIDO PARA PERFORMANCE)     */
+/* EFEITOS (Keyframes)                            */
 /* ============================================== */
-/* ... (Todo o código do .crt, .noise, etc. foi removido) ... */
 
-/* Animações Keyframes (Apenas as que ainda usamos) */
+/* Keyframes de CRT/VHS (mantidos caso você queira reativar) */
+@keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
 @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
+@keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
+@keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5%, -5%); } 20% { transform: translate(-10%, 5%); } 30% { transform: translate(5%, -10%); } 40% { transform: translate(-5%, 15%); } 50% { transform: translate(-10%, 5%); } 60% { transform: translate(15%, 0); } 70% { transform: translate(0, 10%); } 80% { transform: translate(-15%, 0); } 90% { transform: translate(10%, 5%); } 100% { transform: translate(0, 0); } }
+
+/* Keyframes de Estrelas */
 @keyframes stars-layer1 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 100% 100%, 80% 120%, 110% 90%, 90% 80%, 130% 70%; } }
 @keyframes stars-layer2 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 120% 90%, 70% 110%, 100% 80%; } }
 @keyframes stars-layer3 { 0% { background-position: 0% 0%, 0% 0%; } 100% { background-position: 90% 130%, 110% 70%; } }
+
+/* Keyframes de UI */
 @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
 @keyframes pulse-glow { 0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); } 50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); } }
 @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 @keyframes badge-pulse { 0%, 100% { box-shadow: 0 0 10px var(--primary-color); } 50% { box-shadow: 0 0 30px var(--primary-color); } }
 @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes divider-glow { 0%, 100% { box-shadow: 0 0 5px var(--primary-color); } 50% { box-shadow: 0 0 20px var(--primary-color); } }
+
+/* ============================================== */
+/* FIM DOS KEYFRAMES                              */
+/* ============================================== */
 
 
 /* TRANSIÇÃO FLUIDA */
@@ -77,6 +87,8 @@ body.fade-out .page-transition-overlay { opacity: 1; }
         500px 500px, 750px 750px, 600px 600px,
         400px 400px, 850px 850px;
 
+    /* Esta animação é pesada, mas vamos mantê-la por enquanto. Se o lag persistir,
+       você pode remover ou simplificar esta também. */
     animation: 
         stars-layer1 180s linear infinite,
         stars-layer2 120s linear infinite,
@@ -85,7 +97,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     z-index: 0;
 }
 
-/* Estrelas Cadentes (Melhorado) */
+/* Estrelas Cadentes */
 .shooting-star {
     position: absolute;
     width: 2px;
@@ -101,7 +113,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
 .vhs-rec {
     position: fixed; top: 20px; left: 20px; font-size: 1.5rem;
     color: var(--primary-color); z-index: 9995;
-    animation: blink 1.5s infinite; /* 'blink' é uma animação de opacidade, é leve */
+    animation: blink 1.5s infinite; /* 'blink' (opacity) é leve, pode ficar */
     text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
 }
 .vhs-rec::before { content: '●'; font-size: 2rem; margin-right: 10px; }
@@ -140,12 +152,13 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     margin-bottom: 20px; text-transform: uppercase; letter-spacing: 6px;
     position: relative; display: inline-block; color: var(--primary-color);
     text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color), 0 0 40px var(--primary-color);
+    transition: all 0.3s ease; /* Adiciona transição para o hover */
     
-    /* CORREÇÃO DE LAG 1/3: Animação 'pulse-glow' (text-shadow) removida daqui */
+    /* CORREÇÃO DE LAG (1/3): Animação 'pulse-glow' (text-shadow) removida daqui */
     /* animation: pulse-glow 3s ease-in-out infinite; */
 }
 
-/* Animação de brilho SÓ no hover do header */
+/* Ativa a animação de brilho APENAS no hover do header */
 .header:hover .main-title {
     animation: pulse-glow 3s ease-in-out infinite;
 }
@@ -156,14 +169,13 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     border: 2px solid var(--primary-color);
     box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
     font-size: 1.5rem; line-height: 1.8;
-    animation: float 6s ease-in-out infinite; /* 'float' (transform) é leve, pode ficar */
+    animation: float 6s ease-in-out infinite; /* 'float' (transform) é leve */
     transition: all 0.3s ease;
 }
 .about-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 40px rgba(255, 0, 60, 0.6);
 }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .about-section strong {
     color: var(--secondary-color);
     text-shadow: 0 0 10px var(--secondary-color);
@@ -210,12 +222,13 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     border: 2px solid var(--primary-color);
     font-size: 1.3rem; margin-top: 15px;
     box-shadow: 0 0 10px var(--primary-color); /* Sombra estática */
+    transition: all 0.3s ease;
     
-    /* CORREÇÃO DE LAG 2/3: Animação 'badge-pulse' (box-shadow) removida daqui */
+    /* CORREÇÃO DE LAG (2/3): Animação 'badge-pulse' (box-shadow) removida daqui */
     /* animation: badge-pulse 2s ease-in-out infinite; */
 }
 
-/* Animação de pulse SÓ no hover do card */
+/* Ativa a animação de pulse APENAS no hover do card */
 .description-card:hover .multiplayer-badge {
     animation: badge-pulse 2s ease-in-out infinite;
 }
@@ -237,8 +250,8 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     box-shadow: 0 10px 40px rgba(247, 247, 0, 0.6);
 }
 .external-link span { 
-    font-size: 2rem;
-    animation: rotate 3s linear infinite; /* 'rotate' (transform) é leve, pode ficar */
+    font-size: 2rem; 
+    animation: rotate 3s linear infinite; /* 'rotate' (transform) é leve */
 }
 
 /* Botão de Créditos (Azul) */
@@ -267,12 +280,13 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
     margin-bottom: 30px;
     box-shadow: 0 0 5px var(--primary-color); /* Sombra estática */
+    transition: all 0.3s ease;
     
-    /* CORREÇÃO DE LAG 3/3: Animação 'divider-glow' (box-shadow) removida daqui */
+    /* CORREÇÃO DE LAG (3/3): Animação 'divider-glow' (box-shadow) removida daqui */
     /* animation: divider-glow 3s ease-in-out infinite; */
 }
 
-/* Animação de glow SÓ no hover do footer */
+/* Ativa a animação de glow APENAS no hover do footer */
 .footer:hover .footer-divider {
     animation: divider-glow 3s ease-in-out infinite;
 }
