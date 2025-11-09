@@ -1,0 +1,307 @@
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* PALETA AESTHETIC (Igual à da página principal) */
+:root {
+    --bg-dark: #010103;        /* Preto Vibrante */
+    --text-color: #EAEAEA;
+    --primary-color: #FF003C;  /* Vermelho Vibrante */
+    --secondary-color: #00A2FF; /* Azul Vibrante */
+    --accent-color: #F7F700;   /* Amarelo Vibrante */
+    --card-bg: rgba(10, 10, 20, 0.9);
+
+    /* NOVAS PALETAS DE POKÉMON */
+    --oshawott-color: #00A2FF; /* Azul */
+    --greninja-color: #FF003C; /* Vermelho */
+    --arceus-color: #F7F700;   /* Amarelo */
+    --pikachu-color: #F7F700;  /* Amarelo */
+}
+
+body {
+    font-family: 'Courier New', Courier, 'VT323', monospace;
+    background: var(--bg-dark); /* Fundo base */
+    color: var(--text-color);
+    overflow-x: hidden; 
+    position: relative;
+}
+
+/* ============================================== */
+/* EFEITO VHS/CRT (SHADER CSS)                    */
+/* ============================================== */
+
+.crt {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    
+    /* CORREÇÃO DE LAG (1/2): 
+      Animação removida. Será ativada pela classe '.is-glitching'.
+    */
+    /* animation: crt-glitch 1.5s linear infinite; */
+
+    background: var(--bg-dark);
+    transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* NOVAS CLASSES DE TEMA (Fundo) */
+.crt.oshawott-theme {
+    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--oshawott-color) 150%);
+}
+.crt.greninja-theme {
+    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--greninja-color) 150%);
+}
+.crt.arceus-theme {
+    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--arceus-color) 150%);
+}
+.crt.pikachu-theme {
+    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--pikachu-color) 150%);
+}
+
+
+.crt::before {
+    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+    background-size: 100% 4px, 6px 100%;
+    z-index: 9990; pointer-events: none; animation: crt-scanline 15s linear infinite;
+}
+.crt::after {
+    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+    width: 100%; height: 100%; background: rgba(18, 16, 16, 0.1); opacity: 0;
+    z-index: 9992; pointer-events: none; animation: crt-flicker 0.15s infinite;
+}
+.scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+    background-size: 100% 2px; z-index: 9991; pointer-events: none;
+}
+.noise {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWFhYeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
+    opacity: 0.1; z-index: 9993; pointer-events: none;
+    /* CORREÇÃO DE LAG (2/2): 
+      Animação removida. Será ativada pela classe '.is-glitching'.
+    */
+    /* animation: noise 0.5s steps(2) infinite; */
+}
+
+/* ============================================== */
+/* OTIMIZAÇÃO DE LAG: Glitch é ativado via JS */
+/* ============================================== */
+.crt.is-glitching {
+    animation: crt-glitch 1.5s linear infinite;
+}
+.crt.is-glitching > .noise {
+    animation: noise 0.5s steps(2) infinite;
+}
+
+/* Animações Keyframes para o Efeito CRT/VHS */
+@keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
+@keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
+@keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
+@keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5%, -5%); } 20% { transform: translate(-10%, 5%); } 30% { transform: translate(5%, -10%); } 40% { transform: translate(-5%, 15%); } 50% { transform: translate(-10%, 5%); } 60% { transform: translate(15%, 0); } 70% { transform: translate(0, 10%); } 80% { transform: translate(-15%, 0); } 90% { transform: translate(10%, 5%); } 100% { transform: translate(0, 0); } }
+
+/* ============================================== */
+/* FIM DOS EFEITOS VHS/CRT                        */
+/* ============================================== */
+
+
+/* TRANSIÇÃO FLUIDA */
+.page-transition-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-dark); z-index: 9998; opacity: 0;
+    pointer-events: none; transition: opacity 0.5s ease-in-out;
+}
+body.fade-out .page-transition-overlay { opacity: 1; }
+
+/* Indicadores VHS */
+.vhs-rec {
+    position: fixed; top: 20px; left: 20px; font-size: 1.5rem;
+    color: var(--primary-color); z-index: 9995; animation: blink 1.5s infinite;
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+}
+.vhs-rec::before { content: '●'; font-size: 2rem; margin-right: 10px; }
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
+
+.vhs-timestamp {
+    position: fixed; bottom: 20px; right: 20px; font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6); z-index: 9995;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Container */
+.container {
+    max-width: 1400px; margin: 0 auto;
+    padding: 40px 20px; position: relative; z-index: 1;
+}
+
+/* Header */
+.header {
+    text-align: center; margin-bottom: 60px;
+    padding: 40px 20px; position: relative;
+}
+
+.main-title {
+    font-family: 'VT323', monospace; font-size: clamp(3rem, 10vw, 6rem);
+    margin-bottom: 20px; text-transform: uppercase; letter-spacing: 8px;
+    position: relative; display: inline-block; color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color), 0 0 40px var(--primary-color);
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); }
+    50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); }
+}
+
+.subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem); opacity: 0.8;
+    letter-spacing: 3px; color: var(--text-color);
+}
+
+/* Grid de Créditos */
+.credits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+/* EFEITO DE FOCO */
+.credits-grid:hover > .credit-card:not(:hover) {
+    opacity: 0.4;
+    transform: scale(0.98);
+    filter: grayscale(80%);
+}
+
+.credit-card {
+    background: var(--card-bg);
+    border: 2px solid var(--secondary-color); /* Azul */
+    padding: 30px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    box-shadow: 0 0 20px rgba(0, 162, 255, 0.3);
+}
+
+.credit-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--accent-color); /* Amarelo no hover */
+    box-shadow: 0 15px 40px rgba(247, 247, 0, 0.4);
+    opacity: 1; 
+    filter: grayscale(0%);
+}
+
+.pokemon-image-container {
+    width: 100%; height: 250px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+    border: 2px solid var(--secondary-color);
+    transition: border-color 0.4s ease;
+}
+.credit-card:hover .pokemon-image-container { border-color: var(--accent-color); }
+
+.pokemon-image {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(1.2) contrast(1.1);
+    transition: transform 0.6s ease;
+}
+.credit-card:hover .pokemon-image { transform: scale(1.1); }
+
+.card-info { text-align: center; }
+
+.member-name {
+    font-size: 2.5rem; margin-bottom: 10px;
+    color: var(--text-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: color 0.4s ease;
+    position: relative;
+}
+
+/* Efeito Glitch no Nome */
+.member-name::before,
+.member-name::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--card-bg); /* Esconde o glitch */
+    clip-path: inset(0 0 0 0);
+    opacity: 0.8;
+}
+.member-name::before {
+    left: -2px;
+    text-shadow: 2px 0 var(--primary-color);
+}
+.member-name::after {
+    left: 2px;
+    text-shadow: -2px 0 var(--secondary-color);
+}
+.credit-card:hover .member-name::before {
+    animation: glitch-fx 0.15s linear infinite reverse;
+}
+.credit-card:hover .member-name::after {
+    animation: glitch-fx 0.15s linear infinite;
+}
+
+@keyframes glitch-fx { 0% { clip-path: inset(85px 0 2px 0); } 10% { clip-path: inset(30px 0 50px 0); } 20% { clip-path: inset(95px 0 1px 0); } 30% { clip-path: inset(5px 0 80px 0); } 40% { clip-path: inset(70px 0 15px 0); } 50% { clip-path: inset(40px 0 30px 0); } 60% { clip-path: inset(80px 0 5px 0); } 70% { clip-path: inset(20px 0 70px 0); } 80% { clip-path: inset(60px 0 25px 0); } 90% { clip-path: inset(10px 0 90px 0); } 100% { clip-path: inset(90px 0 5px 0); } }
+
+
+.member-role {
+    font-size: 1.5rem; opacity: 0.8;
+    margin-bottom: 15px; color: var(--text-color);
+}
+
+.pokemon-name {
+    font-size: 1.8rem; margin: 15px 0; padding: 10px;
+    background: rgba(0, 162, 255, 0.1);
+    border: 1px solid var(--secondary-color);
+    display: inline-block; transition: all 0.4s ease;
+    color: var(--secondary-color);
+}
+.credit-card:hover .pokemon-name {
+    background: rgba(247, 247, 0, 0.2);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.member-quote {
+    font-size: 1.3rem; font-style: italic; opacity: 0.7;
+    display: block; margin-top: 15px;
+}
+
+/* Botão de Voltar (Amarelo) */
+.back-section { text-align: center; margin-top: 60px; }
+.back-button {
+    display: inline-block; padding: 20px 50px; font-size: 2rem;
+    color: var(--accent-color); text-decoration: none;
+    border: 2px solid var(--accent-color); background: var(--card-bg);
+    position: relative; overflow: hidden; transition: all 0.4s ease;
+    box-shadow: 0 0 20px rgba(247, 247, 0, 0.3);
+    text-transform: uppercase; letter-spacing: 3px;
+}
+.back-button:hover {
+    color: var(--bg-dark); background: var(--accent-color);
+    transform: scale(1.05);
+    box-shadow: 0 0 50px rgba(247, 247, 0, 0.8);
+}
+
+/* Tema Alternativo (Inverte Vermelho e Azul) */
+body.alt-theme {
+    --primary-color: #00A2FF;
+    --secondary-color: #FF003C;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .credits-grid { grid-template-columns: 1fr; }
+    .main-title { font-size: 3rem; letter-spacing: 4px; }
+}
