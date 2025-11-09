@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const descriptionCards = document.querySelectorAll('.description-card');
 
     if (crt && descriptionCards.length > 0) {
+        
         descriptionCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 const themeName = card.dataset.theme;
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     crt.classList.add(themeName);
                 }
             });
+
             card.addEventListener('mouseleave', () => {
                 const themeName = card.dataset.theme;
                 if (themeName) {
@@ -73,17 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
         console.log("✓ Sistema de temas de fundo (Descrição) ativado.");
     }
 
     // ============================================
-    // Geração de Shooting Stars Dinâmicas
+    // NOVO: Geração de Shooting Stars Dinâmicas (CORRIGIDO)
     // ============================================
     const starfield = document.querySelector('.starfield');
     
-    // Keyframe para a estrela cadente (só precisa ser adicionado uma vez)
+    // CORREÇÃO: Cria nossa própria tag <style> para injetar as regras.
+    // Isso evita o SecurityError com o Google Fonts.
+    let styleSheet = null;
     try {
-        const styleSheet = document.styleSheets[0];
+        const styleEl = document.createElement('style');
+        styleEl.id = 'dynamic-shooting-star-keyframes';
+        document.head.appendChild(styleEl);
+        styleSheet = styleEl.sheet; // Pega a folha de estilo que acabamos de criar
+
         const shootingStarKeyframes = `
             @keyframes shoot {
                 0% { 
@@ -110,9 +119,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         `;
-        styleSheet.insertRule(shootingStarKeyframes, styleSheet.cssRules.length);
+        // Adiciona a regra à nossa própria folha de estilo
+        if(styleSheet) {
+            styleSheet.insertRule(shootingStarKeyframes, styleSheet.cssRules.length);
+        }
     } catch (e) {
-        console.warn("Não foi possível inserir keyframes de shooting-star:", e);
+        console.error("Falha ao criar keyframes dinâmicos:", e);
     }
 
 
@@ -152,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ============================================
-    // NOVO: CORREÇÃO DE LAG (Glitch Interativo)
+    // CORREÇÃO DE LAG (Glitch Interativo)
     // ============================================
     const interactiveElements = document.querySelectorAll(
         '.description-card, .external-link, .credits-button, .theme-toggle, .about-section'
