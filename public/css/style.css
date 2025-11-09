@@ -28,79 +28,21 @@ body {
 }
 
 /* ============================================== */
-/* EFEITO VHS/CRT (SHADER CSS)                    */
+/* EFEITO VHS/CRT (REMOVIDO PARA PERFORMANCE)     */
 /* ============================================== */
+/* ... (Todo o código do .crt, .noise, etc. foi removido) ... */
 
-.crt {
-    position: relative;
-    width: 100%;
-    min-height: 100vh; 
-    overflow: hidden;
-
-    /* CORREÇÃO DE LAG (1/2): Animação de glitch desativada.
-      Será ativada pela classe '.is-glitching' no JavaScript.
-    */
-    /* animation: crt-glitch 1.5s linear infinite; */
-
-    background: var(--bg-dark);
-    transition: background 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* NOVAS CLASSES DE TEMA (Fundo) */
-.crt.theme-primary {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--primary-color) 150%);
-}
-.crt.theme-secondary {
-    background: linear-gradient(135deg, var(--bg-dark) 20%, var(--secondary-color) 150%);
-}
-
-
-.crt::before {
-    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-    width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
-    background-size: 100% 4px, 6px 100%;
-    z-index: 9990; pointer-events: none; animation: crt-scanline 15s linear infinite;
-}
-.crt::after {
-    content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
-    width: 100%; height: 100%; background: rgba(18, 16, 16, 0.1); opacity: 0;
-    z-index: 9992; pointer-events: none; animation: crt-flicker 0.15s infinite;
-}
-.scanlines {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
-    background-size: 100% 2px; z-index: 9991; pointer-events: none;
-}
-.noise {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWFhYeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
-    opacity: 0.1; z-index: 9993; pointer-events: none;
-    /* CORREÇÃO DE LAG (2/2): Animação de noise desativada.
-    */
-    /* animation: noise 0.5s steps(2) infinite; */
-}
-
-/* ============================================== */
-/* OTIMIZAÇÃO DE LAG: Glitch é ativado via JS */
-/* ============================================== */
-.crt.is-glitching {
-    animation: crt-glitch 1.5s linear infinite;
-}
-.crt.is-glitching > .noise {
-    animation: noise 0.5s steps(2) infinite;
-}
-
-/* Animações Keyframes para o Efeito CRT/VHS */
-@keyframes crt-glitch { 0%, 3%, 5%, 7%, 100% { clip-path: inset(0 0 0 0); } 1% { clip-path: inset(10px 0 85px 0); } 2% { clip-path: inset(90px 0 1px 0); } 4% { clip-path: inset(40px 0 45px 0); } 6% { clip-path: inset(95px 0 2px 0); } 8% { clip-path: inset(25px 0 60px 0); } }
+/* Animações Keyframes (Apenas as que ainda usamos) */
 @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
-@keyframes crt-flicker { 0% { opacity: 0.27861; } 5% { opacity: 0.34769; } 10% { opacity: 0.23604; } 15% { opacity: 0.90626; } 20% { opacity: 0.18128; } 25% { opacity: 0.83891; } 30% { opacity: 0.65583; } 35% { opacity: 0.67807; } 40% { opacity: 0.26559; } 45% { opacity: 0.84693; } 50% { opacity: 0.96019; } 55% { opacity: 0.08594; } 60% { opacity: 0.20313; } 65% { opacity: 0.71988; } 70% { opacity: 0.53455; } 75% { opacity: 0.37288; } 80% { opacity: 0.71428; } 85% { opacity: 0.70419; } 90% { opacity: 0.7003; } 95% { opacity: 0.36108; } 100% { opacity: 0.24387; } }
-@keyframes noise { 0% { transform: translate(0, 0); } 10% { transform: translate(-5%, -5%); } 20% { transform: translate(-10%, 5%); } 30% { transform: translate(5%, -10%); } 40% { transform: translate(-5%, 15%); } 50% { transform: translate(-10%, 5%); } 60% { transform: translate(15%, 0); } 70% { transform: translate(0, 10%); } 80% { transform: translate(-15%, 0); } 90% { transform: translate(10%, 5%); } 100% { transform: translate(0, 0); } }
-
-/* ============================================== */
-/* FIM DOS EFEITOS VHS/CRT                        */
-/* ============================================== */
+@keyframes stars-layer1 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 100% 100%, 80% 120%, 110% 90%, 90% 80%, 130% 70%; } }
+@keyframes stars-layer2 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 120% 90%, 70% 110%, 100% 80%; } }
+@keyframes stars-layer3 { 0% { background-position: 0% 0%, 0% 0%; } 100% { background-position: 90% 130%, 110% 70%; } }
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
+@keyframes pulse-glow { 0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); } 50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes badge-pulse { 0%, 100% { box-shadow: 0 0 10px var(--primary-color); } 50% { box-shadow: 0 0 30px var(--primary-color); } }
+@keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes divider-glow { 0%, 100% { box-shadow: 0 0 5px var(--primary-color); } 50% { box-shadow: 0 0 20px var(--primary-color); } }
 
 
 /* TRANSIÇÃO FLUIDA */
@@ -111,7 +53,7 @@ body {
 }
 body.fade-out .page-transition-overlay { opacity: 1; }
 
-/* Starfield Background (REFEITO) */
+/* Starfield Background */
 .starfield {
     position: fixed;
     top: 0;
@@ -143,11 +85,6 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     z-index: 0;
 }
 
-/* Animações para as camadas de estrelas */
-@keyframes stars-layer1 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 100% 100%, 80% 120%, 110% 90%, 90% 80%, 130% 70%; } }
-@keyframes stars-layer2 { 0% { background-position: 0% 0%, 0% 0%, 0% 0%; } 100% { background-position: 120% 90%, 70% 110%, 100% 80%; } }
-@keyframes stars-layer3 { 0% { background-position: 0% 0%, 0% 0%; } 100% { background-position: 90% 130%, 110% 70%; } }
-
 /* Estrelas Cadentes (Melhorado) */
 .shooting-star {
     position: absolute;
@@ -164,11 +101,10 @@ body.fade-out .page-transition-overlay { opacity: 1; }
 .vhs-rec {
     position: fixed; top: 20px; left: 20px; font-size: 1.5rem;
     color: var(--primary-color); z-index: 9995;
-    animation: blink 1.5s infinite;
+    animation: blink 1.5s infinite; /* 'blink' é uma animação de opacidade, é leve */
     text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
 }
 .vhs-rec::before { content: '●'; font-size: 2rem; margin-right: 10px; }
-@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
 
 .vhs-timestamp {
     position: fixed; bottom: 20px; right: 20px; font-size: 1.5rem;
@@ -204,11 +140,14 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     margin-bottom: 20px; text-transform: uppercase; letter-spacing: 6px;
     position: relative; display: inline-block; color: var(--primary-color);
     text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color), 0 0 40px var(--primary-color);
-    animation: pulse-glow 3s ease-in-out infinite;
+    
+    /* CORREÇÃO DE LAG 1/3: Animação 'pulse-glow' (text-shadow) removida daqui */
+    /* animation: pulse-glow 3s ease-in-out infinite; */
 }
-@keyframes pulse-glow {
-    0%, 100% { text-shadow: 0 0 10px var(--primary-color), 0 0 25px var(--primary-color); }
-    50% { text-shadow: 0 0 20px var(--primary-color), 0 0 50px var(--primary-color); }
+
+/* Animação de brilho SÓ no hover do header */
+.header:hover .main-title {
+    animation: pulse-glow 3s ease-in-out infinite;
 }
 
 /* Section Styles */
@@ -217,7 +156,7 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     border: 2px solid var(--primary-color);
     box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
     font-size: 1.5rem; line-height: 1.8;
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite; /* 'float' (transform) é leve, pode ficar */
     transition: all 0.3s ease;
 }
 .about-section:hover {
@@ -270,11 +209,15 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     background: rgba(255, 0, 60, 0.2);
     border: 2px solid var(--primary-color);
     font-size: 1.3rem; margin-top: 15px;
-    animation: badge-pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--primary-color); /* Sombra estática */
+    
+    /* CORREÇÃO DE LAG 2/3: Animação 'badge-pulse' (box-shadow) removida daqui */
+    /* animation: badge-pulse 2s ease-in-out infinite; */
 }
-@keyframes badge-pulse {
-    0%, 100% { box-shadow: 0 0 10px var(--primary-color); }
-    50% { box-shadow: 0 0 30px var(--primary-color); }
+
+/* Animação de pulse SÓ no hover do card */
+.description-card:hover .multiplayer-badge {
+    animation: badge-pulse 2s ease-in-out infinite;
 }
 
 /* Links Externos (Amarelo) */
@@ -293,8 +236,10 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     transform: translateY(-5px);
     box-shadow: 0 10px 40px rgba(247, 247, 0, 0.6);
 }
-.external-link span { font-size: 2rem; animation: rotate 3s linear infinite; }
-@keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.external-link span { 
+    font-size: 2rem;
+    animation: rotate 3s linear infinite; /* 'rotate' (transform) é leve, pode ficar */
+}
 
 /* Botão de Créditos (Azul) */
 .credits-button-container { text-align: center; margin: 60px 0; }
@@ -321,12 +266,17 @@ body.fade-out .page-transition-overlay { opacity: 1; }
     width: 100%; height: 2px;
     background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
     margin-bottom: 30px;
+    box-shadow: 0 0 5px var(--primary-color); /* Sombra estática */
+    
+    /* CORREÇÃO DE LAG 3/3: Animação 'divider-glow' (box-shadow) removida daqui */
+    /* animation: divider-glow 3s ease-in-out infinite; */
+}
+
+/* Animação de glow SÓ no hover do footer */
+.footer:hover .footer-divider {
     animation: divider-glow 3s ease-in-out infinite;
 }
-@keyframes divider-glow {
-    0%, 100% { box-shadow: 0 0 5px var(--primary-color); }
-    50% { box-shadow: 0 0 20px var(--primary-color); }
-}
+
 .footer p { font-size: 1.3rem; margin: 10px 0; }
 
 /* Tema Alternativo (Inverte Vermelho e Azul) */

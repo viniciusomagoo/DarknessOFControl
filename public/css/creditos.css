@@ -39,9 +39,7 @@ body {
     min-height: 100vh;
     overflow: hidden;
     
-    /* CORREÇÃO DE LAG (1/2): 
-      Animação removida. Será ativada pela classe '.is-glitching'.
-    */
+    /* CORREÇÃO DE LAG (1/3): Animação de glitch desativada. */
     /* animation: crt-glitch 1.5s linear infinite; */
 
     background: var(--bg-dark);
@@ -74,7 +72,10 @@ body {
 .crt::after {
     content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
     width: 100%; height: 100%; background: rgba(18, 16, 16, 0.1); opacity: 0;
-    z-index: 9992; pointer-events: none; animation: crt-flicker 0.15s infinite;
+    z-index: 9992; pointer-events: none;
+    
+    /* CORREÇÃO DE LAG (2/3): Animação de flicker desativada. */
+    /* animation: crt-flicker 0.15s infinite; */
 }
 .scanlines {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -85,9 +86,8 @@ body {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABgWlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AcxV9TpSotDnYo4pChOlkQFXGUKhQcAh0VFCdFQR0s6FpH/4T/4F/QP/ATdFRx/AFaQZzsbJ/9nJ3N2UqgA1Qy8fM023i4/9PMD/Pz8Nc2WUSR9Q0tPjI+M8h82aR+n/PD4s7Pk6y61v2Q8Z/j/xP+I/r+0M9S6T9bX2t/Yf+xNn8A/okA/Jf3eXsMAA8dLiwIAA/h7y7NweYAb227e2kKDu+t/Yp6S3jJ8s9wCT4w2O+jI/i/s/sK8JYLglgBgI8uGkQzG0FwHjL2M/+D/8f4Z8Xf/v8P8aL+YvYx+aC53wLgOkB9/d8uC+T/zR8/ADx1W1h2/YJ8i8B8LwA+DAO9z/p95f/3f+1/DP+x/I/y5+V/yN/M/9v+i/3P+I/wz/T/7n/S/5b9X/sH81/Kv5z/L/5b+X/zP+a/xf+f/zX+d/yf+T/yr+F/wb+P/wv+G/xv+V/x/8b/xv8V/xf8L/n/8b/j/+L/h/8D/i//v/gP+L/7/8D/k/+j/ov+D/nP6N/gP+H/u/5b+3/vP4F/nf4f/L/63+3/xv+V/z/93/sf8n/sv8v/tP+J/0v+L/2v9H/q/43/E/5n/P/4r/J/5P/G/5n/B/4b/I/4n/J/5f/M/4v+H/xP+D/yf+R/zP+Z/zP+L/xf+B/yP+R/wP+F/yP+T/wf+N/wP+B/wf+P/yP+F/x/+R/xP+F/xP+N/w/+B/w/+B/xP+P/z/+j/ov9H/lf8r/if8n/kf8n/if83/i/8X/u/8H/sf8n/pf8P/tf8P/gP83/g/8X/r/4n/F/7v/N/7f+P/xv+f/zP8p/xf8p/xP8n/l/8v/if8b/jf8n/nf8T/k/8f/l/8v/gP+L/v/43/P/5P/H/6v/S/5v/N/7v/B/4P/D/7f+P/yP+f/0v+Z/yv+L/wP+T/1v+R/z/93/t/5H/T/4H/B/6P/G/6v/f/43/B/4n/C/4v/B/4H/D/4P/C/4X/E/4P/C/4X/F/4v/E/4n/G/43/G/5H/I/5n/K/5n/J/5P+V/wX+F/wP+F/wf+P/wn+D/xP+D/wn+L/xP+D/wP8HAABqg0Qv04A2CQAAAJh0Uk5+ABFESU5PUFNUWFhYeYCJiouMj5GSnJ6kqKuusLGzrbS4u73Ex8jJzM/R1dfZ3N/g4+Tm6Oru8PH19vf4+v3+VH1jWAAAAD1JREFUeNpiYGBkYmKAgXQgYJQB4hIcHByYOBgHGBQYGFiYUuB0YQnFmUDFwMDKCImKq4AOAAdzJcM+UXc/AAAAAElFTkSuQmCC);
     opacity: 0.1; z-index: 9993; pointer-events: none;
-    /* CORREÇÃO DE LAG (2/2): 
-      Animação removida. Será ativada pela classe '.is-glitching'.
-    */
+    
+    /* CORREÇÃO DE LAG (3/3): Animação de noise desativada. */
     /* animation: noise 0.5s steps(2) infinite; */
 }
 
@@ -99,6 +99,10 @@ body {
 }
 .crt.is-glitching > .noise {
     animation: noise 0.5s steps(2) infinite;
+}
+.crt.is-glitching::after {
+    /* Ativa o flicker apenas quando o glitch está ativo */
+    animation: crt-flicker 0.15s infinite;
 }
 
 /* Animações Keyframes para o Efeito CRT/VHS */
