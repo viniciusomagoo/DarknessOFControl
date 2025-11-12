@@ -15,25 +15,22 @@
     
     <style>
 /* ============================================== */
-/* RESET E VARIÁVEIS GLOBAIS (TEMA TERMINAL)
+/* RESET E VARIÁVEIS GLOBAIS
 /* ============================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; /* Esconde o cursor padrão */
 }
 
 :root {
     --bg-dark: #010103;
     --text-color: #E0E0E0;
-    --primary-color: #FF003C; /* Vermelho "REC" */
-    --secondary-color: #00A2FF; /* Azul "Data" */
-    --accent-color: #00FF1A; /* Verde "Terminal" */
-    
+    --primary-color: #FF003C;
+    --secondary-color: #00A2FF;
+    --accent-color: #00FF1A;
     --glitch-red: #ff0000;
     --glitch-cyan: #00ffff;
-
     --font-main: 'VT323', monospace;
 }
 
@@ -45,10 +42,11 @@ body {
     overflow-x: hidden;
     position: relative;
     letter-spacing: 1px;
+    cursor: none;
 }
 
 /* ============================================== */
-/* CURSOR CUSTOMIZADO (ARG)
+/* CURSOR CUSTOMIZADO
 /* ============================================== */
 .custom-cursor {
     position: fixed;
@@ -62,6 +60,7 @@ body {
     pointer-events: none;
     transition: transform 0.1s ease-out;
     mix-blend-mode: difference;
+    will-change: transform;
 }
 
 .custom-cursor::after {
@@ -75,15 +74,9 @@ body {
     transform: translate(-50%, -50%);
 }
 
-body:hover .custom-cursor {
-    transform: scale(1.1);
-}
-
 /* ============================================== */
-/* EFEITOS GLOBAIS (FOUND FOOTAGE / VHS)
+/* EFEITOS VHS / FOUND FOOTAGE
 /* ============================================== */
-
-/* Camada de Transição de Página */
 .page-transition-overlay {
     position: fixed;
     top: 0;
@@ -99,33 +92,29 @@ body:hover .custom-cursor {
 
 body.fade-out .page-transition-overlay {
     opacity: 1;
-    /* Efeito de estática na transição */
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.3"/></svg>');
     animation: vhs-noise-move 0.2s steps(2) infinite;
 }
 
-/* Overlay de "Scanlines" (Linhas de Monitor CRT) */
 .scanlines {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-        repeating-linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0.4) 0px,
-            rgba(0, 0, 0, 0.4) 1px,
-            transparent 2px,
-            transparent 3px
-        );
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.4) 0px,
+        rgba(0, 0, 0, 0.4) 1px,
+        transparent 2px,
+        transparent 3px
+    );
     z-index: 9990;
     pointer-events: none;
     animation: scanline-move 12s linear infinite;
     opacity: 0.5;
 }
 
-/* Overlay de Ruído (Estática) */
 .vhs-noise {
     position: fixed;
     top: 0;
@@ -137,21 +126,21 @@ body.fade-out .page-transition-overlay {
     opacity: 0.1;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="1"/></svg>');
     animation: vhs-noise-move 0.15s steps(2) infinite;
+    will-change: transform;
 }
 
-/* O "Glitch" principal que afeta o conteúdo */
 .vhs-container {
     position: relative;
     z-index: 1;
     animation: vhs-glitch 15s linear infinite;
+    will-change: transform;
 }
 
-/* Classe de Glitch Intenso (ativada por JS) */
 body.heavy-glitch .vhs-container {
     animation: vhs-glitch-intense 0.3s steps(2) infinite;
 }
 
-/* Indicadores "REC" e Timestamp */
+/* Indicadores Fixos */
 .vhs-rec {
     position: fixed;
     top: 20px;
@@ -162,6 +151,7 @@ body.heavy-glitch .vhs-container {
     animation: text-flicker 1.5s infinite;
     text-shadow: 0 0 8px var(--primary-color);
 }
+
 .vhs-rec::before {
     content: '●';
     margin-right: 10px;
@@ -178,10 +168,34 @@ body.heavy-glitch .vhs-container {
     opacity: 0.7;
 }
 
-/* ============================================== */
-/* ANIMAÇÕES (KEYFRAMES)
-/* ============================================== */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-family: var(--font-main);
+    font-size: 1.3rem;
+    background: var(--bg-dark);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    cursor: none;
+    z-index: 9995;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
 
+.theme-toggle:hover {
+    background: var(--secondary-color);
+    color: var(--bg-dark);
+}
+
+.theme-toggle::before {
+    content: '> CMD: ';
+}
+
+/* ============================================== */
+/* ANIMAÇÕES KEYFRAMES
+/* ============================================== */
 @keyframes scanline-move {
     0% { background-position-y: 0px; }
     100% { background-position-y: 400px; }
@@ -200,7 +214,6 @@ body.heavy-glitch .vhs-container {
     50%, 100% { opacity: 0.4; }
 }
 
-/* Efeito de Aberração Cromática */
 @keyframes text-aberration {
     0% { text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-cyan); }
     25% { text-shadow: -2px 0 var(--glitch-red), 2px 0 var(--glitch-cyan); }
@@ -209,7 +222,6 @@ body.heavy-glitch .vhs-container {
     100% { text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-cyan); }
 }
 
-/* Efeito Glitch sutil e constante */
 @keyframes vhs-glitch {
     0% { transform: translate(0, 0); }
     49% { transform: translate(0, 0); }
@@ -220,7 +232,6 @@ body.heavy-glitch .vhs-container {
     100% { transform: translate(0, 0); }
 }
 
-/* Efeito Glitch intenso e rápido */
 @keyframes vhs-glitch-intense {
     0% { transform: translate(-5px, 2px); }
     25% { transform: translate(3px, -3px); opacity: 0.8; }
@@ -230,12 +241,12 @@ body.heavy-glitch .vhs-container {
 }
 
 /* ============================================== */
-/* CONTEÚDO E LAYOUT
+/* LAYOUT E CONTEÚDO
 /* ============================================== */
 .container {
     max-width: 900px;
     margin: 0 auto;
-    padding: 120px 20px 40px 20px; /* Mais espaço no topo */
+    padding: 120px 20px 40px 20px;
     position: relative;
     z-index: 1;
 }
@@ -250,29 +261,33 @@ body.heavy-glitch .vhs-container {
     text-transform: uppercase;
     letter-spacing: 6px;
     color: var(--text-color);
-    
-    /* Animação de Aberração Cromática */
     animation: text-aberration 3s steps(2) infinite;
     text-shadow: 3px 0 var(--glitch-red), -3px 0 var(--glitch-cyan);
+    line-height: 1.2;
 }
 
-/* Seções e "Cards" estilo Terminal */
+/* Seções Terminal */
 .terminal-section {
     margin-bottom: 60px;
     border: 2px solid var(--accent-color);
-    border-radius: 0;
-    background: rgba(0, 10, 0, 0.2); /* Fundo verde escuro sutil */
+    background: rgba(0, 10, 0, 0.2);
     box-shadow: 0 0 15px rgba(0, 255, 26, 0.2);
-    padding: 1px;
+    transition: box-shadow 0.3s ease;
+}
+
+.terminal-section:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 26, 0.4);
 }
 
 .terminal-header {
     background: var(--accent-color);
     color: var(--bg-dark);
-    padding: 5px 15px;
+    padding: 8px 15px;
     font-size: 1.5rem;
     text-transform: uppercase;
+    font-weight: bold;
 }
+
 .terminal-header::before {
     content: 'FILE: ';
 }
@@ -286,15 +301,27 @@ body.heavy-glitch .vhs-container {
 .terminal-content p {
     margin-bottom: 20px;
 }
+
 .terminal-content strong {
     color: var(--secondary-color);
     text-shadow: 0 0 8px var(--secondary-color);
+}
+
+.typing::after {
+    content: '_';
+    color: var(--accent-color);
+    animation: text-flicker 1s infinite;
+    margin-left: 2px;
 }
 
 .game-description {
     display: grid;
     grid-template-columns: 1fr;
     gap: 30px;
+}
+
+.description-card p {
+    margin-bottom: 15px;
 }
 
 .multiplayer-badge {
@@ -306,10 +333,12 @@ body.heavy-glitch .vhs-container {
     margin-top: 15px;
     box-shadow: 0 0 8px var(--primary-color);
     animation: text-flicker 2s infinite;
+    font-weight: bold;
 }
 
-/* Links e Botões Estilo Terminal */
-.external-links, .credits-button-container {
+/* Links e Botões */
+.external-links,
+.credits-button-container {
     text-align: center;
     margin-bottom: 60px;
 }
@@ -323,8 +352,8 @@ body.heavy-glitch .vhs-container {
     text-decoration: none;
     border: 2px solid var(--accent-color);
     background: transparent;
-    transition: all 0.2s ease;
-    cursor: none; /* Usa o cursor customizado */
+    transition: all 0.3s ease;
+    cursor: none;
     margin: 10px;
 }
 
@@ -333,18 +362,19 @@ body.heavy-glitch .vhs-container {
     color: var(--bg-dark);
     text-shadow: none;
     box-shadow: 0 0 20px var(--accent-color);
+    transform: scale(1.05);
 }
 
 .terminal-button.primary {
     color: var(--primary-color);
     border-color: var(--primary-color);
 }
+
 .terminal-button.primary:hover {
     background: var(--primary-color);
     color: var(--bg-dark);
     box-shadow: 0 0 20px var(--primary-color);
 }
-
 
 /* Footer */
 .footer {
@@ -364,197 +394,213 @@ body.heavy-glitch .vhs-container {
     opacity: 0.5;
 }
 
-/* Tema Alternativo (Modo "Corrompido") */
+/* Tema Alternativo */
 body.alt-theme {
-    --accent-color: #F7F700; /* Amarelo */
+    --accent-color: #F7F700;
     --primary-color: #00A2FF;
     --secondary-color: #FF003C;
 }
 
-/* Botão de Tema (agora é um comando de terminal) */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-family: var(--font-main);
-    font-size: 1.3rem;
-    background: var(--bg-dark);
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
-    cursor: none;
-    z-index: 9995;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--secondary-color);
-}
-.theme-toggle:hover {
-    background: var(--secondary-color);
-    color: var(--bg-dark);
-}
-.theme-toggle::before {
-    content: '> CMD: ';
-}
-
-/* Responsivo */
+/* ============================================== */
+/* RESPONSIVO
+/* ============================================== */
 @media (max-width: 768px) {
+    body {
+        cursor: auto;
+    }
+
+    .custom-cursor {
+        display: none;
+    }
+
     .main-title {
         font-size: 2.5rem;
         letter-spacing: 3px;
     }
-    .theme-toggle, .vhs-rec, .vhs-timestamp {
+
+    .theme-toggle,
+    .vhs-rec,
+    .vhs-timestamp {
         font-size: 1.2rem;
+        padding: 8px 15px;
     }
+
     .terminal-button {
         font-size: 1.5rem;
         padding: 12px 25px;
     }
+
     .terminal-content {
         font-size: 1.3rem;
+        padding: 20px;
     }
+
     .terminal-header {
         font-size: 1.2rem;
-    }
-    .custom-cursor {
-        display: none; /* Desativa cursor customizado no mobile */
-    }
-    body {
-        cursor: auto; /* Restaura cursor padrão */
+        padding: 6px 12px;
     }
 }
     </style>
 </head>
 <body>
-
+    <!-- Overlays de Efeito -->
     <div class="page-transition-overlay"></div>
     <div class="scanlines"></div>
     <div class="vhs-noise"></div>
     <div class="custom-cursor"></div>
 
+    <!-- Indicadores VHS -->
     <div class="vhs-rec">REC</div>
     <div class="vhs-timestamp"></div>
     
     <button class="theme-toggle" id="themeToggle">Trocar_Canal</button>
 
+    <!-- Container Principal -->
     <div class="vhs-container">
         <div class="container">
             <header class="header">
                 <h1 class="main-title">Darkness Of Control</h1>
             </header>
 
+            <!-- Seção 1: Log Brasil.IA -->
             <section class="terminal-section">
                 <div class="terminal-header">LOG_BRASILIA_IA.txt</div>
                 <div class="terminal-content">
-                    <p data-typewriter="...Tentativa de recuperação de dados..."></p>
-                    <p data-typewriter="PROJETO: Darkness Of Control. ORIGEM: Curso Brasil.IA (Brasília). OBJETIVO: [DADOS CORROMPIDOS]... ensinar computação, I.A, programação. Este arquivo é uma prova."></p>
+                    <p data-typewriter="...Tentativa de recuperação de dados...">...Tentativa de recuperação de dados...</p>
+                    <p data-typewriter="PROJETO: Darkness Of Control. ORIGEM: Curso Brasil.IA (Brasília). OBJETIVO: [DADOS CORROMPIDOS]... ensinar computação, I.A, programação. Este arquivo é uma prova.">PROJETO: Darkness Of Control. ORIGEM: Curso Brasil.IA (Brasília). OBJETIVO: [DADOS CORROMPIDOS]... ensinar computação, I.A, programação. Este arquivo é uma prova.</p>
                 </div>
             </section>
 
+            <!-- Seção 2: Evidência 001 -->
             <section class="terminal-section">
                 <div class="terminal-header">EVIDENCIA_001.log</div>
                 <div class="terminal-content">
-                    
                     <div class="game-description">
                         <div class="description-card">
-                            <p data-typewriter="...relatório de áudio... 'Eu acordei na floresta... neblina por toda parte. Os geradores... temos que ligar os geradores. Mas tem algo aqui...'"></p>
-                            <p data-typewriter="[ALERTA]: Sons não identificados gravados. Coletar chaves. Se esconder. A entidade está caçando."></p>
+                            <p data-typewriter="...relatório de áudio... 'Eu acordei na floresta... neblina por toda parte. Os geradores... temos que ligar os geradores. Mas tem algo aqui...'">...relatório de áudio... 'Eu acordei na floresta... neblina por toda parte. Os geradores... temos que ligar os geradores. Mas tem algo aqui...'</p>
+                            <p data-typewriter="[ALERTA]: Sons não identificados gravados. Coletar chaves. Se esconder. A entidade está caçando.">[ALERTA]: Sons não identificados gravados. Coletar chaves. Se esconder. A entidade está caçando.</p>
                         </div>
 
                         <div class="description-card">
-                            <p data-typewriter="...comunicação interceptada... 'Não vá sozinho! Me espera! Eu não quero morrer aqui!'"></p>
-                            <p data-typewriter="ANÁLISE: O sistema suporta múltiplas conexões. Até 6 sinais de vida detectados."></p>
+                            <p data-typewriter="...comunicação interceptada... 'Não vá sozinho! Me espera! Eu não quero morrer aqui!'">...comunicação interceptada... 'Não vá sozinho! Me espera! Eu não quero morrer aqui!'</p>
+                            <p data-typewriter="ANÁLISE: O sistema suporta múltiplas conexões. Até 6 sinais de vida detectados.">ANÁLISE: O sistema suporta múltiplas conexões. Até 6 sinais de vida detectados.</p>
                             <span class="multiplayer-badge">👥 1 CAÇADOR + 5 PRESAS</span>
                         </div>
                     </div>
-
                 </div>
             </section>
 
+            <!-- Link Externo GitHub -->
             <section class="external-links">
                 <a href="https://github.com/viniciusomagoo/DarknessOFControl" target="_blank" rel="noopener noreferrer" class="terminal-button primary">
-                    <span>></span> ACESSAR FONTE
+                    <span>></span> ACESSAR_FONTE
                 </a>
             </section>
 
+            <!-- Botão Créditos -->
             <div class="credits-button-container">
                 <a href="creditos/index.html" class="terminal-button">
                     <span>></span> VER_NOMES
                 </a>
             </div>
 
+            <!-- Footer -->
             <footer class="footer">
                 <div class="footer-divider"></div>
-                <p data-typewriter="Última transmissão: 8 de Novembro, 2025"></p>
-                <p data-typewriter="...sinal instável..."></p>
+                <p data-typewriter="Última transmissão: 8 de Novembro, 2025">Última transmissão: 8 de Novembro, 2025</p>
+                <p data-typewriter="...sinal instável...">...sinal instável...</p>
             </footer>
         </div>
     </div>
 
     <script>
-document.addEventListener('DOMContentLoaded', () => {
+(function() {
+    'use strict';
+
     const body = document.body;
+    const isMobile = window.innerWidth < 769;
 
     // ============================================
     // MENSAGEM SECRETA (ARG)
     // ============================================
-    console.log("%c[SISTEMA]: ALERTA DE INTRUSÃO. ELES ESTÃO OBSERVANDO. %c[ARQUIVO: DoC_v0.7a]", 
+    console.log(
+        "%c[SISTEMA]: ALERTA DE INTRUSÃO. ELES ESTÃO OBSERVANDO. %c[ARQUIVO: DoC_v0.7a]",
         "color: #FF003C; font-size: 1.2rem; font-family: 'VT323', monospace;",
-        "color: #E0E0E0; font-size: 1.2rem; font-family: 'VT323', monospace;");
+        "color: #E0E0E0; font-size: 1.2rem; font-family: 'VT323', monospace;"
+    );
 
     // ============================================
     // CURSOR CUSTOMIZADO
     // ============================================
     const cursor = document.querySelector('.custom-cursor');
-    if (cursor) {
-        window.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-        document.querySelectorAll('a, button, .terminal-button').forEach(el => {
+    if (cursor && !isMobile) {
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        const speed = 0.15;
+
+        const moveCursor = (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        };
+
+        const animateCursor = () => {
+            const distX = mouseX - cursorX;
+            const distY = mouseY - cursorY;
+            
+            cursorX += distX * speed;
+            cursorY += distY * speed;
+            
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+        animateCursor();
+
+        // Escala do cursor em elementos interativos
+        document.querySelectorAll('a, button, .terminal-button, .terminal-section').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(1.5)');
             el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
         });
     }
 
     // ============================================
-    // TRANSIÇÃO FLUIDA DE PÁGINA (Com tema)
+    // TRANSIÇÃO DE PÁGINA
     // ============================================
-    const pageTransitionLinks = document.querySelectorAll('a[href$=".html"]:not([target="_blank"])');
-    
-    pageTransitionLinks.forEach(link => {
+    document.querySelectorAll('a[href$=".html"]:not([target="_blank"])').forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const destination = this.href;
             body.classList.add('fade-out');
-            
-            setTimeout(() => {
-                window.location.href = destination;
-            }, 400);
+            setTimeout(() => window.location.href = destination, 400);
         });
     });
 
     // ============================================
-    // VHS Timestamp (Horário Real)
+    // VHS TIMESTAMP
     // ============================================
+    const timestampEl = document.querySelector('.vhs-timestamp');
     function updateTimestamp() {
-        const timestampEl = document.querySelector('.vhs-timestamp');
         if (!timestampEl) return;
-
         const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        
-        timestampEl.textContent = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+        const time = [
+            String(now.getDate()).padStart(2, '0'),
+            String(now.getMonth() + 1).padStart(2, '0'),
+            now.getFullYear()
+        ].join('/') + ' ' + [
+            String(now.getHours()).padStart(2, '0'),
+            String(now.getMinutes()).padStart(2, '0'),
+            String(now.getSeconds()).padStart(2, '0')
+        ].join(':');
+        timestampEl.textContent = time;
     }
-
     setInterval(updateTimestamp, 1000);
     updateTimestamp();
 
     // ============================================
-    // Theme Toggle
+    // THEME TOGGLE
     // ============================================
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
@@ -564,65 +610,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================
-    // EFEITO "TYPEWRITER" (ARG)
+    // EFEITO TYPEWRITER
     // ============================================
     const typeElements = document.querySelectorAll('[data-typewriter]');
     
     function typeWriterEffect(element, text, index = 0) {
+        if (index === 0) {
+            element.textContent = '';
+            element.classList.add('typing');
+        }
+
         if (index < text.length) {
-            element.innerHTML += text.charAt(index);
-            // Adiciona um cursor piscando no final
-            element.innerHTML = element.innerHTML.replace('_', '') + '_';
-            
-            let speed = 30; // Velocidade de digitação
-            if (text.charAt(index) === '.' || text.charAt(index) === ',') {
-                speed = 400; // Pausa em pontuação
-            }
-            
+            element.textContent += text.charAt(index);
+            const speed = (text.charAt(index) === '.' || text.charAt(index) === ',') ? 400 : 30;
             setTimeout(() => typeWriterEffect(element, text, index + 1), speed);
         } else {
-            element.innerHTML = element.innerHTML.replace('_', ''); // Remove o cursor
+            element.classList.remove('typing');
         }
     }
 
     function startTypingAll() {
-        let totalDelay = 500; // Delay inicial
+        let totalDelay = 500;
         typeElements.forEach(el => {
             const text = el.getAttribute('data-typewriter');
-            el.innerHTML = ''; // Limpa o texto original
-            
-            setTimeout(() => {
-                typeWriterEffect(el, text);
-            }, totalDelay);
-            
-            // Calcula o delay para o próximo elemento baseado no tamanho do texto
-            totalDelay += text.length * 35; 
+            setTimeout(() => typeWriterEffect(el, text), totalDelay);
+            totalDelay += text.length * 35;
         });
     }
     
-    startTypingAll();
-
+    window.addEventListener('load', startTypingAll);
 
     // ============================================
-    // GLITCH ALEATÓRIO (Found Footage)
+    // GLITCH ALEATÓRIO
     // ============================================
     function triggerRandomGlitch() {
-        const delay = Math.random() * 20000 + 10000; // Entre 10 e 30 segundos
-        
+        const delay = Math.random() * 20000 + 10000;
         setTimeout(() => {
             body.classList.add('heavy-glitch');
-            
             setTimeout(() => {
                 body.classList.remove('heavy-glitch');
-                triggerRandomGlitch(); // Agenda o próximo glitch
-            }, 300); // Duração do glitch intenso
-
+                triggerRandomGlitch();
+            }, 300);
         }, delay);
     }
-
-    triggerRandomGlitch(); // Inicia o ciclo
-
-});
+    triggerRandomGlitch();
+})();
     </script>
 </body>
 </html>
