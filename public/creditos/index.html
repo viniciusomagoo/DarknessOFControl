@@ -3,29 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créditos - Darkness Of Control</title>
+    <title>> [ACESSO: ARQUIVO_EQUIPE]</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Creepster&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="../css/creditos.css">
+    <style>
+/* ============================================== */
+/* RESET E VARIÁVEIS GLOBAIS (TEMA TERMINAL)
+/* ============================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* O cursor é gerenciado pelo body e JS */
+}
+
+:root {
+    --bg-dark: #010103;
+    --text-color: #E0E0E0;
+    --primary-color: #FF003C; /* Vermelho "REC" */
+    --secondary-color: #00A2FF; /* Azul "Data" */
+    --accent-color: #00FF1A; /* Verde "Terminal" */
+    
+    --glitch-red: #ff0000;
+    --glitch-cyan: #00ffff;
+
+    --font-main: 'VT323', monospace;
+    --font-horror: 'Creepster', cursive;
+}
+
+body {
+    font-family: var(--font-main);
+    background: var(--bg-dark);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    letter-spacing: 1px;
+    cursor: none; /* Esconde o cursor padrão no body */
+}
+
+/* ============================================== */
+/* CURSOR CUSTOMIZADO (ARG)
+/* ============================================== */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-color);
+    opacity: 0.8;
+    z-index: 10000;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease-out;
+    will-change: transform; /* Dica de performance */
+}
+
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    transform: translate(-50%, -50%);
+}
+
+/* ============================================== */
+/* EFEITOS GLOBAIS (FOUND FOOTAGE / VHS)
+/* ============================================== */
+
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+
+body.fade-out .page-transition-overlay {
+    opacity: 1;
+    /* SVG in-line é ultra-performático para texturas */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.3"/></svg>');
+    animation: vhs-noise-move 0.2s steps(2) infinite;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.4) 0px,
+            rgba(0, 0, 0, 0.4) 1px,
+            transparent 2px,
+            transparent 3px
+        );
+    z-index: 9990;
+    pointer-events: none;
+    animation: scanline-move 12s linear infinite;
+    opacity: 0.5;
+}
+
+.vhs-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9991;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="1"/></svg>');
+    animation: vhs-noise-move 0.15s steps(2) infinite;
+    will-change: transform;
+}
+
+.vhs-container {
+    position: relative;
+    z-index: 1;
+    animation: vhs-glitch 15s linear infinite;
+    will-change: transform;
+}
+
+body.heavy-glitch .vhs-container {
+    animation: vhs-glitch-intense 0.3s steps(2) infinite;
+}
+
+/* Indicadores Fixos */
+.vhs-rec {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    color: var(--primary-color);
+    z-index: 9995;
+    animation: text-flicker 1.5s infinite;
+    text-shadow: 0 0 8px var(--primary-color);
+}
+.vhs-rec::before {
+    content: '●';
+    margin-right: 10px;
+}
+
+.vhs-timestamp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--accent-color);
+    z-index: 9995;
+    text-shadow: 0 0 5px var(--accent-color);
+    opacity: 0.7;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-family: var(--font-main);
+    font-size: 1.3rem;
+    background: var(--bg-dark);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    cursor: none;
+    z-index: 9995;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+.theme-toggle:hover {
+    background: var(--secondary-color);
+    color: var(--bg-dark);
+}
+.theme-toggle::before {
+    content: '> CMD: ';
+}
+
+/* ============================================== */
+/* ANIMAÇÕES (KEYFRAMES)
+/* ============================================== */
+
+@keyframes scanline-move {
+    0% { background-position-y: 0px; }
+    100% { background-position-y: 400px; }
+}
+
+@keyframes vhs-noise-move {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(2px, 3px); }
+    50% { transform: translate(-2px, -1px); }
+    75% { transform: translate(-1px, 2px); }
+    100% { transform: translate(1px, -2px); }
+}
+
+@keyframes text-flicker {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.4; }
+}
+
+@keyframes text-glitch {
+    0% { clip-path: inset(42% 0 55% 0); }
+    5% { clip-path: inset(12% 0 33% 0); }
+    10% { clip-path: inset(90% 0 2% 0); }
+    15% { clip-path: inset(30% 0 62% 0); }
+    20% { clip-path: inset(0% 0 100% 0); }
+    25% { clip-path: inset(58% 0 10% 0); }
+    30% { clip-path: inset(77% 0 12% 0); }
+    35% { clip-path: inset(20% 0 40% 0); }
+    40% { clip-path: inset(80% 0 8% 0); }
+    45% { clip-path: inset(10% 0 50% 0); }
+    50% { clip-path: inset(45% 0 30% 0); }
+    55% { clip-path: inset(95% 0 2% 0); }
+    60% { clip-path: inset(25% 0 70% 0); }
+    65% { clip-path: inset(70% 0 5% 0); }
+    70% { clip-path: inset(35% 0 45% 0); }
+    75% { clip-path: inset(15% 0 60% 0); }
+    80% { clip-path: inset(50% 0 30% 0); }
+    85% { clip-path: inset(85% 0 5% 0); }
+    90% { clip-path: inset(40% 0 20% 0); }
+    95% { clip-path: inset(75% 0 15% 0); }
+    100% { clip-path: inset(22% 0 50% 0); }
+}
+
+@keyframes vhs-glitch {
+    0% { transform: translate(0, 0); }
+    49% { transform: translate(0, 0); }
+    50% { transform: translate(2px, 1px); }
+    51% { transform: translate(0, 0); }
+    98% { transform: translate(0, 0); }
+    99% { transform: translate(-1px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes vhs-glitch-intense {
+    0% { transform: translate(-5px, 2px); }
+    25% { transform: translate(3px, -3px); opacity: 0.8; }
+    50% { transform: translate(6px, 4px); }
+    75% { transform: translate(-5px, -2px); opacity: 0.9; }
+    100% { transform: translate(2px, 3px); }
+}
+
+/* ============================================== */
+/* CONTEÚDO E LAYOUT (PÁGINA DE CRÉDITOS)
+/* ============================================== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 120px 20px 40px 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.main-title {
+    font-family: var(--font-horror);
+    font-size: clamp(4rem, 12vw, 8rem);
+    letter-spacing: 8px;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--glitch-red);
+    position: relative;
+    margin-bottom: 10px;
+}
+
+/* Efeito Glitch para Título (usando data-text) */
+.main-title[data-text]::before,
+.member-name[data-text]::before {
+    content: attr(data-text);
+    position: absolute;
+    left: -2px;
+    top: 0;
+    width: 100%;
+    color: var(--text-color);
+    background: var(--bg-dark);
+    overflow: hidden;
+    animation: text-glitch 2s linear infinite reverse;
+    text-shadow: none;
+    z-index: 2;
+}
+
+.main-title[data-text]::after,
+.member-name[data-text]::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    top: 0;
+    width: 100%;
+    color: var(--primary-color);
+    background: var(--bg-dark);
+    overflow: hidden;
+    animation: text-glitch 3s linear infinite;
+    text-shadow: -2px 0 var(--glitch-cyan);
+    z-index: 3;
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    text-shadow: 0 0 5px var(--accent-color);
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+/* OTIMIZAÇÃO: Cursor de digitação via CSS */
+[data-typewriter].typing::after {
+    content: '_';
+    color: var(--accent-color);
+    animation: text-flicker 1s infinite;
+    margin-left: 2px;
+    font-size: 1em;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    mix-blend-mode: screen; 
+}
+
+.header-logo {
+    max-width: 150px;
+    height: auto;
+    opacity: 0.7;
+    animation: text-flicker 3s infinite;
+}
+
+/* Grid de Créditos */
+.credits-grid {
+    display: grid;
+    /* Perfeito para responsividade sem media queries */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.credit-card {
+    border: 2px solid var(--accent-color);
+    background: rgba(0, 10, 0, 0.2);
+    box-shadow: 0 0 15px rgba(0, 255, 26, 0.2);
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform, box-shadow;
+}
+
+.credit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(0, 255, 26, 0.5);
+}
+
+.card-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.pokemon-image-container {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--accent-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.pokemon-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.2) brightness(0.9);
+    mix-blend-mode: screen;
+    opacity: 0.8;
+    animation: text-flicker 4s infinite;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.member-name {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    position: relative;
+    margin-bottom: 5px;
+    /* altura mínima para evitar "pulos" de layout com o typewriter */
+    min-height: 2.5rem; 
+}
+
+.member-role {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    min-height: 1.5rem;
+}
+
+.pokemon-name {
+    display: inline-block;
+    background: var(--accent-color);
+    color: var(--bg-dark);
+    font-size: 1.2rem;
+    padding: 2px 8px;
+    margin-bottom: 15px;
+    align-self: flex-start;
+    min-height: 1.2rem;
+}
+
+.member-quote {
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--text-color);
+    opacity: 0.7;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 10px;
+    min-height: 1.3rem;
+}
+
+/* Botão de Voltar */
+.back-section {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.terminal-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-family: var(--font-main);
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    text-decoration: none;
+    border: 2px solid var(--accent-color);
+    background: transparent;
+    transition: all 0.2s ease;
+    cursor: none; 
+    margin: 10px;
+}
+
+.terminal-button:hover {
+    background: var(--accent-color);
+    color: var(--bg-dark);
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+
+/* Responsivo */
+@media (max-width: 768px) {
+    body {
+        cursor: auto; /* Restaura cursor padrão no mobile */
+    }
+    .main-title {
+        font-size: 4rem;
+        letter-spacing: 3px;
+    }
+    .theme-toggle, .vhs-rec, .vhs-timestamp {
+        font-size: 1.2rem;
+    }
+    .credits-grid {
+        /* O auto-fit já cuida disso, mas garantimos 1 coluna */
+        grid-template-columns: 1fr; 
+    }
+    .card-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .pokemon-name {
+        align-self: center;
+    }
+    .member-quote {
+        border-left: none;
+        border-top: 3px solid var(--accent-color);
+        padding-left: 0;
+        padding-top: 10px;
+    }
+    .custom-cursor {
+        display: none; /* Desabilita cursor customizado no mobile */
+    }
+}
+    </style>
 </head>
 <body>
 
-    <div class="crt">
-        <div class="noise"></div>
-        <div class="scanlines"></div>
+    <div class="page-transition-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="vhs-noise"></div>
+    <div class="custom-cursor"></div>
 
-        <div class="page-transition-overlay"></div>
-        <div class="vhs-rec">REC</div>
-        <div class="vhs-timestamp"></div>
+    <div class="vhs-rec">REC</div>
+    <div class="vhs-timestamp"></div>
+    
+    <button class="theme-toggle" id="themeToggle">Trocar_Aparência</button>
 
+    <div class="vhs-container">
+        
         <main class="container">
             <header class="header">
                 <h1 class="main-title" data-text="CRÉDITOS">CRÉDITOS</h1>
-                <p class="subtitle">Equipe Darkness Of Control / Apoio Brasil.IA</p>
-                <p style="opacity: 50%;">Créditos baseados nos pokémons com base na sua aparência</p>
+                <p class="subtitle" data-typewriter="Equipe Darkness Of Control / Apoio Brasil.IA"></p>
                 
                 <div class="logo-container">
                     <img src="../logos/ico-logo-gdf.svg" alt="Logo GDF" class="header-logo">
@@ -35,68 +528,203 @@
 
             <div class="credits-grid">
                 
-                <article class="credit-card" data-pokemon="oshawott">
+                <article class="credit-card">
                     <div class="card-content">
                         <div class="pokemon-image-container">
                             <img src="../img/oshawott.jpg" alt="Oshawott" class="pokemon-image">
                         </div>
                         <div class="card-info">
-                            <h2 class="member-name" data-text="Vinícius">Vinícius</h2>
-                            <p class="member-role">Desenvolvedor/Designer</p>
-                            <div class="pokemon-name">Oshawott</div>
-                            <span class="member-quote">"os professores que nos temam."</span>
+                            <h2 class="member-name" data-text="Vinícius" data-typewriter="Vinícius"></h2>
+                            <p class="member-role" data-typewriter="Desenvolvedor/Designer"></p>
+                            <div class="pokemon-name" data-typewriter="Oshawott"></div>
+                            <span class="member-quote" data-typewriter='"os professores que nos temam."'></span>
                         </div>
                     </div>
                 </article>
 
-                <article class="credit-card" data-pokemon="greninja">
+                <article class="credit-card">
                     <div class="card-content">
                         <div class="pokemon-image-container">
                             <img src="../img/greninja.jpg" alt="Greninja" class="pokemon-image">
                         </div>
                         <div class="card-info">
-                            <h2 class="member-name" data-text="Gabriel">Gabriel</h2>
-                            <p class="member-role">Tester</p>
-                            <div class="pokemon-name">Greninja</div>
-                            <span class="member-quote">"vou roubar sua makita"</span>
+                            <h2 class="member-name" data-text="Gabriel" data-typewriter="Gabriel"></h2>
+                            <p class="member-role" data-typewriter="Tester"></p>
+                            <div class="pokemon-name" data-typewriter="Greninja"></div>
+                            <span class="member-quote" data-typewriter='"vou roubar sua makita"'></span>
                         </div>
                     </div>
                 </article>
 
-                <article class="credit-card" data-pokemon="arceus">
+                <article class="credit-card">
                     <div class="card-content">
                         <div class="pokemon-image-container">
                             <img src="../img/arceus.jpg" alt="Arceus" class="pokemon-image">
                         </div>
                         <div class="card-info">
-                            <h2 class="member-name" data-text="Wenderson">Wenderson</h2>
-                            <p class="member-role">Ideias/Tester</p>
-                            <div class="pokemon-name">Arceus</div>
-                            <span class="member-quote">"Deixei?"</span>
+                            <h2 class="member-name" data-text="Wenderson" data-typewriter="Wenderson"></h2>
+                            <p class="member-role" data-typewriter="Ideias/Tester"></p>
+                            <div class="pokemon-name" data-typewriter="Arceus"></div>
+                            <span class="member-quote" data-typewriter='"Deixei?"'></span>
                         </div>
                     </div>
                 </article>
 
-                <article class="credit-card" data-pokemon="pikachu">
+                <article class="credit-card">
                     <div class="card-content">
                         <div class="pokemon-image-container">
                             <img src="../img/pikachu.jpg" alt="Pikachu" class="pokemon-image">
                         </div>
                         <div class="card-info">
-                            <h2 class="member-name" data-text="Gustavo">Gustavo</h2>
-                            <p class="member-role">Tester</p>
-                            <div class="pokemon-name">Pikachu</div>
-                            <span class="member-quote">"os professores que nos temam."</span>
+                            <h2 class="member-name" data-text="Gustavo" data-typewriter="Gustavo"></h2>
+                            <p class="member-role" data-typewriter="Tester"></p>
+                            <div class="pokemon-name" data-typewriter="Pikachu"></div>
+                            <span class="member-quote" data-typewriter='"os professores que nos temam."'></span>
                         </div>
                     </div>
                 </article>
             </div>
 
             <div class="back-section">
-                <a href="../index.html" class="back-button nav-link">← Voltar ao Início</a>
+                <a href="../index.html" class="terminal-button"><span>&lt;</span> VOLTAR.exe</a>
             </div>
         </main> 
 
-    </div> <script src="../js/creditos.js" defer></script> 
+    </div> 
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const isMobile = !window.matchMedia('(min-width: 769px)').matches;
+
+    // ============================================
+    // MENSAGEM SECRETA (ARG)
+    // ============================================
+    console.log("%c[SISTEMA]: ACESSO AUTORIZADO. BEM VINDO WANDERSON %c[ARQUIVO: DOC_CREDITOS.log]", 
+        "color: #00FF1A; font-size: 1.2rem; font-family: 'VT323', monospace;",
+        "color: #E0E0E0; font-size: 1.2rem; font-family: 'VT323', monospace;");
+
+    // ============================================
+    // CURSOR CUSTOMIZADO (Apenas para Desktop)
+    // ============================================
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor && !isMobile) {
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .terminal-button, .credit-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(1.5)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+        });
+    }
+
+    // ============================================
+    // TRANSIÇÃO FLUIDA DE PÁGINA
+    // ============================================
+    document.querySelectorAll('a[href$=".html"]:not([target="_blank"])').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const destination = this.href;
+            body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = destination;
+            }, 400); // Corresponde à duração da transição no CSS
+        });
+    });
+
+    // ============================================
+    // VHS Timestamp (Horário Real)
+    // ============================================
+    const timestampEl = document.querySelector('.vhs-timestamp');
+    function updateTimestamp() {
+        if (!timestampEl) return;
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        timestampEl.textContent = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateTimestamp, 1000);
+    updateTimestamp(); // Chamar uma vez no início
+
+    // ============================================
+    // Theme Toggle
+    // ============================================
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('alt-theme');
+        });
+    }
+
+    // ============================================
+    // EFEITO "TYPEWRITER" (OTIMIZADO)
+    // ============================================
+    const typeElements = document.querySelectorAll('[data-typewriter]');
+    
+    function typeWriterEffect(element, text, index = 0) {
+        if (index === 0) {
+            element.innerHTML = ''; // Limpa o conteúdo
+            element.classList.add('typing'); // Adiciona classe para cursor CSS
+        }
+
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index); // Apenas adiciona texto
+            
+            let speed = 40; // Velocidade de digitação
+            if (text.charAt(index) === '.' || text.charAt(index) === ',') {
+                speed = 450; // Pausa em pontuação
+            }
+            
+            setTimeout(() => typeWriterEffect(element, text, index + 1), speed);
+        } else {
+            element.classList.remove('typing'); // Remove classe, cursor CSS some
+        }
+    }
+
+    function startTypingAll() {
+        let totalDelay = 500; // Delay inicial
+        typeElements.forEach(el => {
+            const text = el.getAttribute('data-typewriter');
+            // Limpa o conteúdo de placeholder (se houver)
+            el.innerHTML = ''; 
+            
+            setTimeout(() => {
+                typeWriterEffect(el, text);
+            }, totalDelay);
+            
+            // Calcula o delay para o próximo elemento
+            totalDelay += text.length * 45 + 300; 
+        });
+    }
+    
+    startTypingAll();
+
+
+    // ============================================
+    // GLITCH ALEATÓRIO (Found Footage)
+    // ============================================
+    function triggerRandomGlitch() {
+        const delay = Math.random() * 20000 + 10000; // Entre 10 e 30 segundos
+        
+        setTimeout(() => {
+            body.classList.add('heavy-glitch');
+            
+            setTimeout(() => {
+                body.classList.remove('heavy-glitch');
+                triggerRandomGlitch(); // Agenda o próximo glitch
+            }, 300); // Duração do glitch intenso
+
+        }, delay);
+    }
+
+    triggerRandomGlitch(); // Inicia o ciclo
+
+});
+    </script>
 </body>
 </html>

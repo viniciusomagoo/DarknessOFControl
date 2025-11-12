@@ -3,99 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darkness Of Control</title>
+    <title>>>>> [ARQUIVO CORROMPIDO] - DoC_v0.7a</title>
     
-    <meta name="description" content="Darkness Of Control é um jogo multiplayer de terror, criado e abençoado por Vinícius o Mago e GDF.">
+    <meta name="description" content="[DADOS PERDIDOS] ... escuridão ... floresta ... entidade ... [DADOS PERDIDOS]">
     <meta name="keywords" content="Darkness Of Control, Jogo de Terror, Multiplayer, Brasil.IA, Vinícius o Mago, GDF, Computação, Programação, Inteligência Artificial">
-    <meta name="author" content="Vinícius o Mago">
+    <meta name="author" content="[REMOVIDO]">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     
     <style>
-/* Reset Básico */
+/* ============================================== */
+/* RESET E VARIÁVEIS GLOBAIS (TEMA TERMINAL)
+/* ============================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    cursor: none; /* Esconde o cursor padrão */
 }
 
 :root {
     --bg-dark: #010103;
-    --text-color: #EAEAEA;
-    --primary-color: #FF003C;
-    --secondary-color: #00A2FF;
-    --accent-color: #F7F700;
-    --card-bg: rgba(10, 10, 20, 0.9);
+    --text-color: #E0E0E0;
+    --primary-color: #FF003C; /* Vermelho "REC" */
+    --secondary-color: #00A2FF; /* Azul "Data" */
+    --accent-color: #00FF1A; /* Verde "Terminal" */
+    
+    --glitch-red: #ff0000;
+    --glitch-cyan: #00ffff;
+
+    --font-main: 'VT323', monospace;
 }
 
 body {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-main);
     background: var(--bg-dark);
     color: var(--text-color);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    letter-spacing: 1px;
 }
 
 /* ============================================== */
-/* KEYFRAMES OTIMIZADOS */
+/* CURSOR CUSTOMIZADO (ARG)
 /* ============================================== */
-
-/* Animação simplificada para estrelas */
-@keyframes stars-move {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-50px, 50px); }
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--accent-color);
+    opacity: 0.8;
+    z-index: 10000;
+    pointer-events: none;
+    transition: transform 0.1s ease-out;
+    mix-blend-mode: difference;
 }
 
-/* Animações leves para UI */
-@keyframes blink {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0.3; }
+.custom-cursor::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    transform: translate(-50%, -50%);
 }
 
-@keyframes pulse-glow {
-    0%, 100% { 
-        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-    }
-    50% { 
-        text-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--primary-color);
-    }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
-
-@keyframes badge-pulse {
-    0%, 100% { box-shadow: 0 0 10px var(--primary-color); }
-    50% { box-shadow: 0 0 20px var(--primary-color); }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes shoot {
-    0% { 
-        transform: translate(var(--startX), var(--startY)) rotate(-45deg);
-        opacity: 0;
-    }
-    10% { opacity: 1; }
-    90% { opacity: 0.8; }
-    100% { 
-        transform: translate(var(--endX), var(--endY)) rotate(-45deg);
-        opacity: 0;
-    }
+body:hover .custom-cursor {
+    transform: scale(1.1);
 }
 
 /* ============================================== */
-/* COMPONENTES VISUAIS */
+/* EFEITOS GLOBAIS (FOUND FOOTAGE / VHS)
 /* ============================================== */
 
+/* Camada de Transição de Página */
 .page-transition-overlay {
     position: fixed;
     top: 0;
@@ -111,55 +99,71 @@ body {
 
 body.fade-out .page-transition-overlay {
     opacity: 1;
+    /* Efeito de estática na transição */
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.3"/></svg>');
+    animation: vhs-noise-move 0.2s steps(2) infinite;
 }
 
-/* Starfield Simplificado */
-.starfield {
+/* Overlay de "Scanlines" (Linhas de Monitor CRT) */
+.scanlines {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(1.5px 1.5px at 20% 30%, #fff, transparent),
-        radial-gradient(1.5px 1.5px at 60% 70%, #fff, transparent),
-        radial-gradient(1px 1px at 50% 50%, #fff, transparent),
-        radial-gradient(1px 1px at 80% 10%, #fff, transparent),
-        radial-gradient(1.5px 1.5px at 10% 80%, #fff, transparent);
-    background-size: 600px 600px, 700px 700px, 550px 550px, 800px 800px, 650px 650px;
-    animation: stars-move 120s linear infinite;
-    opacity: 0.15;
-    z-index: 0;
-    will-change: transform;
-}
-
-.shooting-star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-    border-radius: 50%;
-    opacity: 0;
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.4) 0px,
+            rgba(0, 0, 0, 0.4) 1px,
+            transparent 2px,
+            transparent 3px
+        );
+    z-index: 9990;
     pointer-events: none;
-    z-index: 1;
-    will-change: transform, opacity;
+    animation: scanline-move 12s linear infinite;
+    opacity: 0.5;
 }
 
-/* Indicadores VHS */
+/* Overlay de Ruído (Estática) */
+.vhs-noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9991;
+    pointer-events: none;
+    opacity: 0.1;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="1"/></svg>');
+    animation: vhs-noise-move 0.15s steps(2) infinite;
+}
+
+/* O "Glitch" principal que afeta o conteúdo */
+.vhs-container {
+    position: relative;
+    z-index: 1;
+    animation: vhs-glitch 15s linear infinite;
+}
+
+/* Classe de Glitch Intenso (ativada por JS) */
+body.heavy-glitch .vhs-container {
+    animation: vhs-glitch-intense 0.3s steps(2) infinite;
+}
+
+/* Indicadores "REC" e Timestamp */
 .vhs-rec {
     position: fixed;
     top: 20px;
     left: 20px;
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: var(--primary-color);
     z-index: 9995;
-    animation: blink 1.5s infinite;
+    animation: text-flicker 1.5s infinite;
     text-shadow: 0 0 8px var(--primary-color);
 }
-
 .vhs-rec::before {
     content: '●';
-    font-size: 2rem;
     margin-right: 10px;
 }
 
@@ -167,245 +171,228 @@ body.fade-out .page-transition-overlay {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    font-size: 1.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    color: var(--accent-color);
     z-index: 9995;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 0 5px var(--accent-color);
+    opacity: 0.7;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 12px 24px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.3rem;
-    background: var(--card-bg);
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
-    cursor: pointer;
-    z-index: 9995;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px var(--secondary-color);
+/* ============================================== */
+/* ANIMAÇÕES (KEYFRAMES)
+/* ============================================== */
+
+@keyframes scanline-move {
+    0% { background-position-y: 0px; }
+    100% { background-position-y: 400px; }
 }
 
-.theme-toggle:hover {
-    background: var(--secondary-color);
-    color: var(--bg-dark);
-    box-shadow: 0 0 20px var(--secondary-color);
-    transform: scale(1.05);
+@keyframes vhs-noise-move {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(2px, 3px); }
+    50% { transform: translate(-2px, -1px); }
+    75% { transform: translate(-1px, 2px); }
+    100% { transform: translate(1px, -2px); }
 }
 
-/* Container */
+@keyframes text-flicker {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.4; }
+}
+
+/* Efeito de Aberração Cromática */
+@keyframes text-aberration {
+    0% { text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-cyan); }
+    25% { text-shadow: -2px 0 var(--glitch-red), 2px 0 var(--glitch-cyan); }
+    50% { text-shadow: 2px 2px var(--glitch-red), -2px -2px var(--glitch-cyan); }
+    75% { text-shadow: 1px -2px var(--glitch-red), 1px 2px var(--glitch-cyan); }
+    100% { text-shadow: 2px 0 var(--glitch-red), -2px 0 var(--glitch-cyan); }
+}
+
+/* Efeito Glitch sutil e constante */
+@keyframes vhs-glitch {
+    0% { transform: translate(0, 0); }
+    49% { transform: translate(0, 0); }
+    50% { transform: translate(2px, 1px); }
+    51% { transform: translate(0, 0); }
+    98% { transform: translate(0, 0); }
+    99% { transform: translate(-1px, 2px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* Efeito Glitch intenso e rápido */
+@keyframes vhs-glitch-intense {
+    0% { transform: translate(-5px, 2px); }
+    25% { transform: translate(3px, -3px); opacity: 0.8; }
+    50% { transform: translate(6px, 4px); }
+    75% { transform: translate(-5px, -2px); opacity: 0.9; }
+    100% { transform: translate(2px, 3px); }
+}
+
+/* ============================================== */
+/* CONTEÚDO E LAYOUT
+/* ============================================== */
 .container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 120px 20px 40px 20px; /* Mais espaço no topo */
     position: relative;
     z-index: 1;
 }
 
-/* Header */
 .header {
     text-align: center;
     margin-bottom: 60px;
-    padding: 60px 20px;
 }
 
 .main-title {
-    font-family: 'VT323', monospace;
-    font-size: clamp(2.5rem, 10vw, 6rem);
-    margin-bottom: 20px;
+    font-size: clamp(2.5rem, 10vw, 5rem);
     text-transform: uppercase;
     letter-spacing: 6px;
-    position: relative;
-    display: inline-block;
-    color: var(--primary-color);
-    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
-    transition: all 0.3s ease;
+    color: var(--text-color);
+    
+    /* Animação de Aberração Cromática */
+    animation: text-aberration 3s steps(2) infinite;
+    text-shadow: 3px 0 var(--glitch-red), -3px 0 var(--glitch-cyan);
 }
 
-.header:hover .main-title {
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Sections */
-.about-section {
-    text-align: center;
-    padding: 30px;
-    background: var(--card-bg);
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 0 20px rgba(255, 0, 60, 0.3);
-    font-size: 1.5rem;
-    line-height: 1.8;
+/* Seções e "Cards" estilo Terminal */
+.terminal-section {
     margin-bottom: 60px;
-    transition: all 0.3s ease;
+    border: 2px solid var(--accent-color);
+    border-radius: 0;
+    background: rgba(0, 10, 0, 0.2); /* Fundo verde escuro sutil */
+    box-shadow: 0 0 15px rgba(0, 255, 26, 0.2);
+    padding: 1px;
 }
 
-.about-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 30px rgba(255, 0, 60, 0.5);
+.terminal-header {
+    background: var(--accent-color);
+    color: var(--bg-dark);
+    padding: 5px 15px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+.terminal-header::before {
+    content: 'FILE: ';
 }
 
-.about-section strong {
+.terminal-content {
+    padding: 25px;
+    font-size: 1.6rem;
+    line-height: 1.8;
+}
+
+.terminal-content p {
+    margin-bottom: 20px;
+}
+.terminal-content strong {
     color: var(--secondary-color);
     text-shadow: 0 0 8px var(--secondary-color);
 }
 
-.section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--primary-color);
-    text-shadow: 0 0 12px var(--primary-color);
-    letter-spacing: 4px;
-}
-
-.game-info-section {
-    margin-bottom: 60px;
-}
-
 .game-description {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 30px;
-}
-
-.game-description:hover > .description-card:not(:hover) {
-    opacity: 0.5;
-    transform: scale(0.98);
-}
-
-.description-card {
-    background: var(--card-bg);
-    border: 2px solid var(--secondary-color);
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 162, 255, 0.3);
-}
-
-.description-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: var(--accent-color);
-    box-shadow: 0 15px 35px rgba(247, 247, 0, 0.4);
-    opacity: 1;
-}
-
-.description-card p {
-    font-size: 1.4rem;
-    line-height: 1.8;
-    margin-bottom: 15px;
 }
 
 .multiplayer-badge {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 8px 15px;
     background: rgba(255, 0, 60, 0.2);
     border: 2px solid var(--primary-color);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin-top: 15px;
     box-shadow: 0 0 8px var(--primary-color);
-    transition: all 0.3s ease;
+    animation: text-flicker 2s infinite;
 }
 
-.description-card:hover .multiplayer-badge {
-    animation: badge-pulse 2s ease-in-out infinite;
-}
-
-/* Links Externos */
-.external-links {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+/* Links e Botões Estilo Terminal */
+.external-links, .credits-button-container {
+    text-align: center;
     margin-bottom: 60px;
 }
 
-.external-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 20px 40px;
+.terminal-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-family: var(--font-main);
     font-size: 1.8rem;
     color: var(--accent-color);
     text-decoration: none;
     border: 2px solid var(--accent-color);
-    background: var(--card-bg);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(247, 247, 0, 0.3);
+    background: transparent;
+    transition: all 0.2s ease;
+    cursor: none; /* Usa o cursor customizado */
+    margin: 10px;
 }
 
-.external-link:hover {
-    color: var(--bg-dark);
+.terminal-button:hover {
     background: var(--accent-color);
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(247, 247, 0, 0.6);
-}
-
-.external-link span {
-    font-size: 2rem;
-    animation: rotate 3s linear infinite;
-}
-
-/* Botão de Créditos */
-.credits-button-container {
-    text-align: center;
-    margin: 60px 0;
-}
-
-.credits-button {
-    display: inline-block;
-    padding: 20px 50px;
-    font-size: 2rem;
-    color: var(--secondary-color);
-    text-decoration: none;
-    border: 2px solid var(--secondary-color);
-    background: var(--card-bg);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 15px rgba(0, 162, 255, 0.3);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
-
-.credits-button:hover {
     color: var(--bg-dark);
-    background: var(--secondary-color);
-    transform: scale(1.1);
-    box-shadow: 0 0 40px rgba(0, 162, 255, 0.7);
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--accent-color);
 }
+
+.terminal-button.primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.terminal-button.primary:hover {
+    background: var(--primary-color);
+    color: var(--bg-dark);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
 
 /* Footer */
 .footer {
     text-align: center;
     padding: 40px 20px;
-    margin-top: 80px;
-    opacity: 0.8;
+    margin-top: 40px;
+    opacity: 0.6;
+    font-size: 1.3rem;
 }
 
 .footer-divider {
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
     margin-bottom: 30px;
-    box-shadow: 0 0 5px var(--primary-color);
+    box-shadow: 0 0 5px var(--accent-color);
+    opacity: 0.5;
 }
 
-.footer p {
-    font-size: 1.3rem;
-    margin: 10px 0;
-}
-
-/* Tema Alternativo */
+/* Tema Alternativo (Modo "Corrompido") */
 body.alt-theme {
+    --accent-color: #F7F700; /* Amarelo */
     --primary-color: #00A2FF;
     --secondary-color: #FF003C;
+}
+
+/* Botão de Tema (agora é um comando de terminal) */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-family: var(--font-main);
+    font-size: 1.3rem;
+    background: var(--bg-dark);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+    cursor: none;
+    z-index: 9995;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+.theme-toggle:hover {
+    background: var(--secondary-color);
+    color: var(--bg-dark);
+}
+.theme-toggle::before {
+    content: '> CMD: ';
 }
 
 /* Responsivo */
@@ -414,85 +401,92 @@ body.alt-theme {
         font-size: 2.5rem;
         letter-spacing: 3px;
     }
-    
-    .game-description {
-        grid-template-columns: 1fr;
-    }
-    
-    .theme-toggle {
-        font-size: 1.1rem;
-        padding: 10px 20px;
-    }
-    
-    .vhs-rec, .vhs-timestamp {
+    .theme-toggle, .vhs-rec, .vhs-timestamp {
         font-size: 1.2rem;
     }
-    
-    .external-link, .credits-button {
+    .terminal-button {
         font-size: 1.5rem;
-        padding: 15px 30px;
+        padding: 12px 25px;
+    }
+    .terminal-content {
+        font-size: 1.3rem;
+    }
+    .terminal-header {
+        font-size: 1.2rem;
+    }
+    .custom-cursor {
+        display: none; /* Desativa cursor customizado no mobile */
+    }
+    body {
+        cursor: auto; /* Restaura cursor padrão */
     }
 }
     </style>
 </head>
 <body>
+
     <div class="page-transition-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="vhs-noise"></div>
+    <div class="custom-cursor"></div>
 
     <div class="vhs-rec">REC</div>
     <div class="vhs-timestamp"></div>
     
-    <div class="starfield"></div>
+    <button class="theme-toggle" id="themeToggle">Trocar_Canal</button>
 
-    <button class="theme-toggle" id="themeToggle">Trocar Tema</button>
+    <div class="vhs-container">
+        <div class="container">
+            <header class="header">
+                <h1 class="main-title">Darkness Of Control</h1>
+            </header>
 
-    <div class="container">
-        <header class="header">
-            <h1 class="main-title">DARKNESS OF CONTROL</h1>
-        </header>
-
-        <section class="about-section">
-            <p>
-                Darkness Of Control é um projeto do curso de Brasília chamado <strong>Brasil.IA</strong>, 
-                com objetivo de ensinar sobre computação, I.A, programação (inclusive esse site) e muito mais!
-            </p>
-        </section>
-
-        <section class="game-info-section">
-            <h2 class="section-title">Descrição do Jogo</h2>
-            
-            <div class="game-description">
-                <div class="description-card">
-                    <p>
-                        Na escuridão, você acorda no meio de uma floresta cheia de neblina e medo. 
-                        Repare geradores, colete chaves e se esconda da entidade que espreita nas sombras.
-                    </p>
+            <section class="terminal-section">
+                <div class="terminal-header">LOG_BRASILIA_IA.txt</div>
+                <div class="terminal-content">
+                    <p data-typewriter="...Tentativa de recuperação de dados..."></p>
+                    <p data-typewriter="PROJETO: Darkness Of Control. ORIGEM: Curso Brasil.IA (Brasília). OBJETIVO: [DADOS CORROMPIDOS]... ensinar computação, I.A, programação. Este arquivo é uma prova."></p>
                 </div>
+            </section>
 
-                <div class="description-card">
-                    <p>
-                        Você não aguenta ir sozinho e quer que seus amigos sofram também? 
-                        O jogo oferece compatibilidade multiplayer para até 6 pessoas.
-                    </p>
-                    <span class="multiplayer-badge">👥 1 Assassino + 5 Sobreviventes</span>
+            <section class="terminal-section">
+                <div class="terminal-header">EVIDENCIA_001.log</div>
+                <div class="terminal-content">
+                    
+                    <div class="game-description">
+                        <div class="description-card">
+                            <p data-typewriter="...relatório de áudio... 'Eu acordei na floresta... neblina por toda parte. Os geradores... temos que ligar os geradores. Mas tem algo aqui...'"></p>
+                            <p data-typewriter="[ALERTA]: Sons não identificados gravados. Coletar chaves. Se esconder. A entidade está caçando."></p>
+                        </div>
+
+                        <div class="description-card">
+                            <p data-typewriter="...comunicação interceptada... 'Não vá sozinho! Me espera! Eu não quero morrer aqui!'"></p>
+                            <p data-typewriter="ANÁLISE: O sistema suporta múltiplas conexões. Até 6 sinais de vida detectados."></p>
+                            <span class="multiplayer-badge">👥 1 CAÇADOR + 5 PRESAS</span>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
+
+            <section class="external-links">
+                <a href="https://github.com/viniciusomagoo/DarknessOFControl" target="_blank" rel="noopener noreferrer" class="terminal-button primary">
+                    <span>></span> ACESSAR FONTE
+                </a>
+            </section>
+
+            <div class="credits-button-container">
+                <a href="creditos/index.html" class="terminal-button">
+                    <span>></span> VER_NOMES
+                </a>
             </div>
-        </section>
 
-        <section class="external-links">
-            <a href="https://github.com/viniciusomagoo/DarknessOFControl" target="_blank" rel="noopener noreferrer" class="external-link">
-                <span>⚡</span> GitHub
-            </a>
-        </section>
-
-        <div class="credits-button-container">
-            <a href="creditos/index.html" class="credits-button">Créditos</a>
+            <footer class="footer">
+                <div class="footer-divider"></div>
+                <p data-typewriter="Última transmissão: 8 de Novembro, 2025"></p>
+                <p data-typewriter="...sinal instável..."></p>
+            </footer>
         </div>
-
-        <footer class="footer">
-            <div class="footer-divider"></div>
-            <p><em>Última atualização: 8 de Novembro, 2025</em></p>
-            <p style="font-size: 0.9rem; margin-top: 10px;">Site otimizado para navegadores modernos</p>
-        </footer>
     </div>
 
     <script>
@@ -500,7 +494,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     // ============================================
-    // TRANSIÇÃO FLUIDA DE PÁGINA
+    // MENSAGEM SECRETA (ARG)
+    // ============================================
+    console.log("%c[SISTEMA]: ALERTA DE INTRUSÃO. ELES ESTÃO OBSERVANDO. %c[ARQUIVO: DoC_v0.7a]", 
+        "color: #FF003C; font-size: 1.2rem; font-family: 'VT323', monospace;",
+        "color: #E0E0E0; font-size: 1.2rem; font-family: 'VT323', monospace;");
+
+    // ============================================
+    // CURSOR CUSTOMIZADO
+    // ============================================
+    const cursor = document.querySelector('.custom-cursor');
+    if (cursor) {
+        window.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        document.querySelectorAll('a, button, .terminal-button').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(1.5)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
+        });
+    }
+
+    // ============================================
+    // TRANSIÇÃO FLUIDA DE PÁGINA (Com tema)
     // ============================================
     const pageTransitionLinks = document.querySelectorAll('a[href$=".html"]:not([target="_blank"])');
     
@@ -517,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================
-    // VHS Timestamp
+    // VHS Timestamp (Horário Real)
     // ============================================
     function updateTimestamp() {
         const timestampEl = document.querySelector('.vhs-timestamp');
@@ -548,43 +564,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================
-    // Estrelas Cadentes Otimizadas
+    // EFEITO "TYPEWRITER" (ARG)
     // ============================================
-    const starfield = document.querySelector('.starfield');
+    const typeElements = document.querySelectorAll('[data-typewriter]');
     
-    function createShootingStar() {
-        if (!starfield) return;
+    function typeWriterEffect(element, text, index = 0) {
+        if (index < text.length) {
+            element.innerHTML += text.charAt(index);
+            // Adiciona um cursor piscando no final
+            element.innerHTML = element.innerHTML.replace('_', '') + '_';
+            
+            let speed = 30; // Velocidade de digitação
+            if (text.charAt(index) === '.' || text.charAt(index) === ',') {
+                speed = 400; // Pausa em pontuação
+            }
+            
+            setTimeout(() => typeWriterEffect(element, text, index + 1), speed);
+        } else {
+            element.innerHTML = element.innerHTML.replace('_', ''); // Remove o cursor
+        }
+    }
 
-        const star = document.createElement('div');
-        star.classList.add('shooting-star');
-        starfield.appendChild(star);
-
-        const startX = Math.random() * window.innerWidth * 1.5;
-        const startY = Math.random() * window.innerHeight * 0.3;
-        const endX = startX - Math.random() * 500 - 300;
-        const endY = startY + Math.random() * 500 + 300;
-        const duration = Math.random() * 2 + 1.5;
-        const delay = Math.random() * 8;
-
-        star.style.setProperty('--startX', `${startX}px`);
-        star.style.setProperty('--startY', `${startY}px`);
-        star.style.setProperty('--endX', `${endX}px`);
-        star.style.setProperty('--endY', `${endY}px`);
-        star.style.animation = `shoot ${duration}s linear ${delay}s forwards`;
-
-        star.addEventListener('animationend', () => {
-            star.remove();
-            // Cria nova estrela após um intervalo
-            setTimeout(createShootingStar, Math.random() * 3000 + 2000);
+    function startTypingAll() {
+        let totalDelay = 500; // Delay inicial
+        typeElements.forEach(el => {
+            const text = el.getAttribute('data-typewriter');
+            el.innerHTML = ''; // Limpa o texto original
+            
+            setTimeout(() => {
+                typeWriterEffect(el, text);
+            }, totalDelay);
+            
+            // Calcula o delay para o próximo elemento baseado no tamanho do texto
+            totalDelay += text.length * 35; 
         });
     }
+    
+    startTypingAll();
 
-    // Inicia com 3 estrelas cadentes
-    for (let i = 0; i < 3; i++) {
-        setTimeout(createShootingStar, i * 2000);
+
+    // ============================================
+    // GLITCH ALEATÓRIO (Found Footage)
+    // ============================================
+    function triggerRandomGlitch() {
+        const delay = Math.random() * 20000 + 10000; // Entre 10 e 30 segundos
+        
+        setTimeout(() => {
+            body.classList.add('heavy-glitch');
+            
+            setTimeout(() => {
+                body.classList.remove('heavy-glitch');
+                triggerRandomGlitch(); // Agenda o próximo glitch
+            }, 300); // Duração do glitch intenso
+
+        }, delay);
     }
 
-    console.log("✓ Site Darkness Of Control carregado e otimizado!");
+    triggerRandomGlitch(); // Inicia o ciclo
+
 });
     </script>
 </body>
